@@ -1,0 +1,40 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.filters {
+  position: sticky;
+  width: 200px;
+  top: 50px;
+  left: calc((100% - 1300px)*.5);
+  padding-top: 20px;
+}
+
+/*.filters__general {
+  display: flex;
+  flex-direction: column;
+}*/
+
+.filters a {
+  text-decoration: none;
+  color: #000000;
+  width: 196px;
+  height: 30px;
+  
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.filters a:hover {
+  outline: 1px solid rgb(227, 237, 238);
+  border-radius: 3px;
+  background-color: rgb(237, 249, 250);
+}
+
+.filters li {
+
+  list-style: none;
+}

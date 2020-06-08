@@ -127,6 +127,17 @@ export default [{
       }
     }
   },
+  {
+    method: 'GET',
+    path: '/avatar/{file*}',
+    handler: {
+      directory: {
+        path: './src/public/img/avatars/',
+        redirectToSlash: true,
+        index: true,
+      }
+    }
+  },
 {
   method:'POST',
   path:'/upload',

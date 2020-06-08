@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main_header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: aqua;
+  width: 100%;
+}
+
+.header__containter {
+  display: flex;
+  box-sizing: border-box;
+  /*overflow: hidden;*/
+  position: relative;
+  margin: 0 auto;
+  justify-content: space-between;
+  width: 1300px;
+  height: 50px;
+}
+
+.visually-hidden:not(:focus):not(:active){
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.newPost {
+  padding: 5px;
+  align-self: center;
+  text-decoration: none;
+  color: #000000;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  background-color:  rgb(250, 249, 249);
+}
+
+.newPost:hover {
+  border-color: slategrey;
+}
+
+.header__user-menu {
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+
+.header__login-menu{
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-top: 10px;
+  height: 50px;
+}
+
+.header__button {
+  width: 70px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.header__user-menu_notice {
+  margin-top: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url(../../../img/icons/notice.svg) no-repeat;
+  margin-right: 5px;
+}
+
+.login{
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.login::before {
+  content: url(../../../img/icons/login_icon.svg);
+  position: absolute;
+  left: -7px;
+  width: 17px;
+  height: 17px;
+}
+/*.header__button {
+  margin-top: 10px;
+}*/
