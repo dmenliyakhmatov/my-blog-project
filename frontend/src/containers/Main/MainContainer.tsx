@@ -1,13 +1,14 @@
 import * as React from "react";
-import PageHeader from './PageWrapper/MainHeader/PageHeader';
-import Filters from './Filters';
-import LiveBlock from '../containers/PageWrapper/LiveBlock/LiveBlock'
-import Posts from '../containers/content/posts/posts'
+import PageHeader from '../../components/PageWrapper/MainHeader/PageHeader';
+import Filters from '../PageWrapper/SideBar';
+import LiveBlock from '../PageWrapper/LiveBlock/LiveBlock'
+import Posts from '../Posts'
 import './main.css'
+import { Router } from "react-router-dom";
 
 // 'HelloWorldProps' describes our props structure.
 // For the state, we use the '{}' type.
-export class Main extends React.Component {
+export default class MainContainer extends React.Component {
   constructor(props:{}) {
     super(props);
     this.state = {
@@ -27,6 +28,7 @@ export class Main extends React.Component {
             <LiveBlock />
           </div>
         </div>
+
       )
 }
 }

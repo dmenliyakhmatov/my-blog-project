@@ -13,7 +13,7 @@
     "esModuleInterop": true
   },
   "include": [
-    "./src/*", "src/components/Main.tsx"
+    "./src/*", "src/containers/Main/index.tsx"
   ],
   "files": [
     "./declaration.d.ts"

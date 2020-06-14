@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/Filters'
+import './Filters'
 
 
 export default function Filters() {

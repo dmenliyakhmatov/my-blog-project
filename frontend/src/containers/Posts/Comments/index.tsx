@@ -1,7 +1,5 @@
 import React from 'react';
-import avatar from '../../../img/defaultAvatar.png';
 import Comment from '../../../components/Post/Comment'
-import './LiveBlock.css'
 
 export default class LiveBlock extends React.Component {
   constructor(props:{}){
