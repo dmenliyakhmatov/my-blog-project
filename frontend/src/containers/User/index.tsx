@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { routes } from '../../router/routes';
-import UserContainer from './UserContainer'
+import UsersContainer from './UserContainer'
 
 const Users = () => {
   const UserPages = {
-      component: UserContainer,
+      component: UsersContainer,
       path: routes.USER_PROFILE_PATH,
       exact: true,
     };

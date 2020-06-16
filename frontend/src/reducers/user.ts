@@ -1,18 +1,12 @@
+import { UserData } from './../components/PageWrapper/MainHeader/PageHeader';
 import { USER_INPUT_LOGIN_CHANGED, USER_TRY_TO_LOG_IN, GET_USERS_SUCCESS, GET_USERS_LOADING, GET_USERS_FAIL, USER_TRY_TO_LOG_OUT} from '../constants';
 
 const initialState = {
     userLogin: '',
     isLoggedIn: false,
-    activePageId: 0,
-    pages: [
-        { pageId: 0, name: 'Главная', path: '/' },
-        { pageId: 1, name: 'Статьи', path: '/articles' },
-        { pageId: 2, name: 'Пользователи', path: '/users' },
-        { pageId: 3, name: 'Контакты', path: '/about' },
-    ],
-    users: [],
     isUsersLoading: false,
     errMsg: '',
+    userData: {posts:[]},
 };
 
 const actionExample = {
@@ -51,7 +45,7 @@ export default function userReducer(state = initialState, action:any) {
         case GET_USERS_SUCCESS:
             return {
                 ...state,
-                users: action.payload,
+                userData: action.payload,
                 isUsersLoading: false,
             };
 

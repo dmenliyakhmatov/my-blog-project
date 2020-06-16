@@ -23,7 +23,7 @@ export default [{
   },
     {
     method: 'GET',
-    path: '/info',
+    path: '/api/info/{userId}',
     handler: usersActions.getInfo,
     options: {
       validate: validators.getInfo

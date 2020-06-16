@@ -4,20 +4,28 @@ import Boom from 'boom';
 
 export default {
   createPost: async (request, h) => {
-    const {title, textContent} = request.payload;
-    const authorOfPost = request.auth.credentials;
+    try{
+      const {title, textContent} = request.payload;
+      const authorOfPost = request.auth.credentials;
 
-    let newPost = new database.post({
-      _id: new mongoose.Types.ObjectId(),
-      title: title,
-      textContent: textContent,
-      userId: authorOfPost.userId,
-    });
+      let newPost = new database.post({
+        _id: new mongoose.Types.ObjectId(),
+        title: title,
+        textContent: textContent,
+        userId: authorOfPost.userId,
+      });
 
-    newPost.save(function (err) {
-      if (err) throw err;
-    })
-    return "Пост успешно создан"
+      newPost.save(function (err) {
+        if (err) throw err;
+      })
+      console.log('!!!!')
+      await database.user.updateOne({userId:authorOfPost.userId}, {$push: {posts: newPost._id}})
+
+      return "Пост успешно создан"
+    } catch(e) {
+      console.log(e)
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
   },
 
   getPost: async (request, h) => {

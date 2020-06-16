@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class PostsConstainer extends React.Component<{}, {}> {
+export default class PostCategories extends React.Component<{}, {}> {
   render() {
     return (
       <div className='live_container'>

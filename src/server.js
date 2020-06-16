@@ -16,14 +16,15 @@ import makeUserAuth from './auth/userAuth.js';
 const init = async () => {
 
     const server = Hapi.server({
-        port: parseInt(process.env.PORT || 3000),
+        port: parseInt(process.env.PORT || 5000),
         host: process.env.HOST || 'localhost',
         routes: {
             validate: {
                 failAction: (req, h, err) => {
                     throw err;
-                }
-            }
+                },
+            },
+            cors: true,
         }
     });
 

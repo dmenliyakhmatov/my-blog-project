@@ -30,7 +30,12 @@ const schema = new mongoose.Schema(
     token: {
       type: mongoose.Schema.Types.String,
       default: uuid.v4,
-    }
+    },
+    posts: [{
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'post'
+    }]
   },
   {
     timestamps: true

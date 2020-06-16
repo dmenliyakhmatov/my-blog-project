@@ -53,13 +53,19 @@ export default {
     }
   },
   getInfo: async (request, h) => {
-    try {const queryUserId = request.query.userId;
-    const user = await database.user.findOne({userId: queryUserId});
+    try {const queryUserId = request.params.userId;
+    const user = await database.user
+        .findOne({userId: queryUserId})
+        .populate({
+          path: 'posts',
+          perDocumentLimit: 4
+        });
     if(user) {
       const userInfo = {
         name: user.name,
         surname: user.surname,
-        birthDate: user.birthDate
+        birthDate: user.birthDate,
+        posts: user.posts
       }
       return userInfo;
     } else {

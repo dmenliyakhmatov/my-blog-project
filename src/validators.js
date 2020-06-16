@@ -20,7 +20,7 @@ export default {
     })
   },
   getInfo: {
-    query: Joi.object({
+    params: Joi.object({
       userId: Joi.string().required()
     })
   },
