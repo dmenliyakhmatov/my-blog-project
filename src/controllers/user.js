@@ -58,7 +58,7 @@ export default {
         .findOne({userId: queryUserId})
         .populate({
           path: 'posts',
-          perDocumentLimit: 4
+          perDocumentLimit: 20
         });
     if(user) {
       const userInfo = {

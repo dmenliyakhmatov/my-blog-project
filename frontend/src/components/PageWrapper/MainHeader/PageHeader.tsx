@@ -13,7 +13,7 @@ export interface UserData{
 
 export interface HeaderProps {
   user?: UserData;
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
 }
 
 export default function Header(props:HeaderProps) {

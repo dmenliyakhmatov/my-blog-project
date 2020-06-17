@@ -1,11 +1,9 @@
 import React from 'react';
-import UserCard from '../../components/UserCard';
-import axios from 'axios';
+import UserCard from '../../../components/User/UserCard';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PostItem from '../../components/Post/PostItem'
-import actions from '../../actions/user';
-import Posts from '../Posts';
+import PostItem from '../../../components/Post/PostItem'
+import actions from '../../../actions/user';
 // 'HelloWorldProps' describes our props structure.
 // For the state, we use the '{}' type.
 interface UserState {

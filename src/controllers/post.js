@@ -84,5 +84,18 @@ export default {
     } else {
       return Boom.forbidden('У вас нет прав на данное действие');
     }
-  }
+  },
+
+  getAllPosts: async (request, h) => {
+    try {
+      const postList = await database.post.find({},{title: true, textContent:true}).limit(20);
+      
+      return postList;
+        
+    } catch(e) {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
+  },
+
 }

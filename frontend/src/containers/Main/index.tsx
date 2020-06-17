@@ -4,15 +4,9 @@ import { routes } from '../../router/routes';
 import MainContainer from './MainContainer'
 
 const Main = () => {
-  const mainPage = {
-      component: MainContainer,
-      path: routes.MAIN_PAGE_PATH,
-      exact: true,
-    };
-
   return (
     <Switch>
-      <Route {...mainPage} />
+      <Route component={MainContainer} path={routes.MAIN_PAGE_PATH} exact />
     </Switch>
   )
 }

@@ -37,6 +37,13 @@ export default {
     textContent: Joi.string().min(50).required()
    })
  },
+ allPostsData: {
+  payload: Joi.object({
+   title: Joi.string().min(10).required(),
+   textContent: Joi.string().min(50).required(),
+   imageUrl: Joi.string().optional()
+  })
+},
  commentData: {
   payload: Joi.object({
     commentBody: Joi.string().min(1).required()

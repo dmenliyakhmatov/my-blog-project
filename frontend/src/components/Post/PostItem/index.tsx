@@ -1,4 +1,5 @@
 import React from 'react';
+import './postItemStyle.css'
 
 const PostItem = (props: any) => {
   const {title, textContent} = props;

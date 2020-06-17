@@ -1,29 +1,49 @@
 import React from 'react';
-import avatar from '../../../img/defaultAvatar.png';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '../../../actions/post';
+import PostItem from '../../../components/Post/PostItem';
+interface IPostProps {
+  isLoggedIn: boolean;
+  isPostLoading: boolean;
+  errMsg: string;
+  postsList: [];
+  actions: any;
+}
 
-
-export default class LiveBlock extends React.Component {
-  constructor(props:{}){
+interface IPostState {
+  isLoggedIn: boolean;
+  isPostLoading: boolean;
+  errMsg: string;
+  postsList: [];
+  actions: any;
+}
+class PostsAll extends React.Component<IPostProps,IPostState > {
+  constructor(props:IPostProps){
     super(props);
-    this.state={
-
-    }
   }
+
+componentDidMount() {
+  this.props.actions.fetchAllPosts();
+}
 
   render() {
     return(
-      <div className='live_container'>
-        <div className='live_comment'>
-          <span className='live__fullName'>Имя Фамилия</span>
-          <img src={avatar} width='300px' alt=''/>
-          <p className='live__comment-text'> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint, magnam!</p>
-        </div>
-        <div className='live_comment'>
-          <span className='live__fullName'>Имя Фамилия</span>
-          <img src={avatar} width='300px' alt=''/>
-          <p className='live__comment-text'> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint, magnam!</p>
-        </div>
-      </div>
+      <>
+        {
+          this.props.postsList?.map((post, i) => (
+            <PostItem {...post} key={`Post_${i}`} />)
+          )
+        }
+        </>
     )
   }
 }
+
+const mapStateToProps = (state: any) => ({ ...state.post });
+
+const mapDispatchToProps = (dispatch: any) => ({
+  actions: bindActionCreators(actions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsAll)

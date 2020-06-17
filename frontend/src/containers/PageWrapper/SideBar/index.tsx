@@ -1,5 +1,6 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
+import {routes} from '../../../router/routes';
 import './Filters'
 
 
@@ -8,7 +9,7 @@ export default function Filters() {
     <div className={"filters"}>
       <div className="filters-container">
         <ul className={"filters__general"}>
-          <li><a href="#" className={"filters__general_items"}>Свежее</a> </li>
+          <li><Link to={routes.POSTS_ALL_PATH} className={"filters__general_items"}>Свежее</Link> </li>
           <li><a href="#" className={"filters__general_items"}>Популярное</a> </li>
           <li><a href="#" className={"filters__general_items"}>Рекомендуемое</a> </li>
           <li><a href="#" className={"filters__general_items"}>Мои записи</a> </li>

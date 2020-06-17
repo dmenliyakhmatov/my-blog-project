@@ -1,7 +1,5 @@
 import * as React from "react";
-import PageHeader from '../../components/PageWrapper/MainHeader/PageHeader';
-import Filters from '../PageWrapper/SideBar';
-import LiveBlock from '../PageWrapper/LiveBlock/LiveBlock'
+
 import Posts from '../Posts'
 import './main.css'
 import { Router } from "react-router-dom";
@@ -16,17 +14,14 @@ export default class MainContainer extends React.Component {
     }
   }
 
+ 
 
     render() {
       return(
+        
         <div className={'homePage'}>
-          <PageHeader isLoggedIn={false} />
-          <div className="content-box">
-
-            <Filters />
-            <Posts />
-            <LiveBlock />
-          </div>
+          {console.log('EEEEEEEE')}
+          Main page
         </div>
 
       )

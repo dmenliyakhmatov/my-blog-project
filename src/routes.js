@@ -59,19 +59,13 @@ export default [{
     }
   },
   {
-    method: 'POST',
-    path: '/writing',
-    handler: postActions.createPost,
-    options: {
-      auth: {
-        strategy: 'user'
-      },
-      validate: validators.postData
-    }
+    method: 'GET',
+    path: '/api/postAll',
+    handler: postActions.getAllPosts,
   },
   {
     method: 'GET',
-    path: '/post/{postId}',
+    path: 'api/post/{postId}',
     handler: postActions.getPost,
   },
   {
