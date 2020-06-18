@@ -12,31 +12,41 @@ interface UserState {
 }
 
 interface UserProps {
-  actions: any,
+  actions: any;
   userData:{
-    posts: []
-  },
-  isUsersLoading: boolean
-
+    posts: [{
+      _id:string
+    }]
+  };
+  isUsersLoading: boolean;
+  postNumber: number;
 }
 
 class UsersContainer extends React.Component<UserProps, UserState> {
   constructor(props:UserProps) {
     super(props);
   }
- 
 
   componentDidMount() {
+    console.log(this.props)
     this.props.actions.fetchUser();
+  }
+
+  showMore = () => {
+    console.log(this.props.postNumber)
+    const postNumber = this.props.postNumber
+    this.props.actions.fetchNextPosts(postNumber);
   }
 
   render() {
     return (<>
-      {!this.props.isUsersLoading && <div>
+     {this.props.isUsersLoading && <span>Загрузка...</span>}
+      {this.props.userData && <div>
         <UserCard userData={this.props.userData} />
-        {this.props.userData.posts.map((post, index) => (
-          <PostItem {...post} key={`PostItem_${index}`} />
+        {this.props.userData.posts && this.props.userData.posts.map((post, index) => (
+          <PostItem {...post} key={`PostItem_${post._id}`} />
         ))}
+        <button type='button' onClick={this.showMore}> Показать еще</button>
       </div>
       }
       </>

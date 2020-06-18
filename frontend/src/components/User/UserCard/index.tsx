@@ -5,7 +5,7 @@ const UserCard = (props: any) => {
   //   name,
   //   surname
   // }} = props;
-  console.log(props)
+  // console.log(props)
   return (
     <section className="user-card__wrapper">
       <div className="content__row">

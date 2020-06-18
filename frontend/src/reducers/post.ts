@@ -1,4 +1,4 @@
-import { GET_USERS_SUCCESS, GET_USERS_FAIL, GET_POSTS_SUCCESS, GET_POSTS_FAIL } from './../constants/index';
+import { GET_USERS_SUCCESS, GET_USERS_FAIL, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS } from './../constants/index';
 import { GET_POSTS_LOADING } from './../constants';
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
   isPostLoading: false,
   errMsg: '',
   postsList: [],
-  postData:{}
+  postNumber: 4,
 };
 
 const postReducer = (state = initialState, action: any) => {
@@ -24,11 +24,33 @@ const postReducer = (state = initialState, action: any) => {
           isPostLoading: false,
       }
 
+      case GET_NEXT_POST_SUCCESS: 
+      const nextPostNumber = state.postNumber + 4;
+      console.log(state.postsList)
+        return {
+            ...state,
+            postsList: [...state.postsList ,...action.payload],
+            isPostLoading: false,
+            postNumber: nextPostNumber,
+        }
+
     case GET_POSTS_FAIL:
       return {
           ...state,
           errMsg: action.payload,
           isPostLoading: false,
+      }
+
+    case GET_ONE_POST_SUCCESS:
+      return {
+        ...state,
+        postData: action.payload,
+        isPostLoading: false,
+      }
+    case LEAVE_POSTS_PAGE:
+      return {
+        ...state,
+        postNumber: 0,
       }
     default:
       return state

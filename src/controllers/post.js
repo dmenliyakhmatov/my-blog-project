@@ -88,8 +88,21 @@ export default {
 
   getAllPosts: async (request, h) => {
     try {
-      const postList = await database.post.find({},{title: true, textContent:true}).limit(20);
+  
+      const postList = await database.post.find({},{title: true, textContent:true}).limit(4);
       
+      return postList;
+        
+    } catch(e) {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
+  },
+  getNextPosts: async (request, h) => {
+    try {
+      const postNumber = +request.headers.postnumber;
+      const postList = await database.post.find({},{title: true, textContent:true}).limit(4).skip(postNumber);
+      console.log(postNumber)
       return postList;
         
     } catch(e) {

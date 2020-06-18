@@ -9,9 +9,9 @@ const Posts = () => {
 
   return (
     <Switch>
-      <Route component={PostsAll} path={routes.POSTS_ALL_PATH} exact />
-      <Route component={PostCategories} path={routes.POST_CATEGORIES} exact />
-      <Route component={PostPageContainer} path={routes.POST_PAGE} exact />
+      <Route path={routes.POSTS_ALL_PATH} exact={true} component={PostsAll}  />
+      {/* <Route component={PostCategories} path={routes.POST_CATEGORIES} exact={true} />  */}
+      <Route component={PostPageContainer} path={routes.POST_PAGE} exact={true} />
       
     </Switch>
   )

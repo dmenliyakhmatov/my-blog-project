@@ -20,7 +20,8 @@ const schema = new mongoose.Schema(
     }],
     userId: {
       type: mongoose.Schema.Types.String,
-      required:true
+      required:true,
+      ref: 'user'
     },
     likes: [{
       type: mongoose.Schema.Types.ObjectId,

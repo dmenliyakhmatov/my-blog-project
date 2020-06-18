@@ -1,5 +1,6 @@
 import database from '../database/connection.js';
 import Boom from 'boom';
+import comment from './comment.js';
 
 export default {
   changeProfile: async (request, h) => {
@@ -53,13 +54,15 @@ export default {
     }
   },
   getInfo: async (request, h) => {
+    // console.log(request.headers)
     try {const queryUserId = request.params.userId;
     const user = await database.user
         .findOne({userId: queryUserId})
         .populate({
           path: 'posts',
-          perDocumentLimit: 20
+          limit: 4
         });
+        console.log(user.posts.length)
     if(user) {
       const userInfo = {
         name: user.name,
@@ -71,6 +74,31 @@ export default {
     } else {
       return null
     }} catch {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
+    }
+  },
+  getNextUserPost: async (request, h) => {
+    try {
+      const postNumber = +request.headers.postnumber;
+      const queryUserId = request.params.userId;
+      console.log(postNumber); 
+      const user = await database.user
+        .findOne({userId: queryUserId})
+        .populate({
+          path: 'posts',
+          options: { limit: 4, skip: postNumber }
+        });
+        
+    if(user) {
+      const userInfo = {
+        posts: user.posts
+      }
+      console.log(userInfo); 
+      return userInfo;
+    } else {
+      return null
+    }} catch (e){
       console.log(e);
       return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
     }

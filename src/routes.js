@@ -21,10 +21,18 @@ export default [{
       validate: validators.loginData,
     }
   },
-    {
+  {
     method: 'GET',
     path: '/api/info/{userId}',
     handler: usersActions.getInfo,
+    options: {
+      validate: validators.getInfo
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/info/{userId}/nextPosts',
+    handler: usersActions.getNextUserPost,
     options: {
       validate: validators.getInfo
     }
@@ -59,13 +67,29 @@ export default [{
     }
   },
   {
+    method: 'POST',
+    path: '/writing',
+    handler: postActions.createPost,
+    options: {
+      auth: {
+        strategy: 'user'
+      },
+      validate: validators.postData
+    }
+  },
+  {
     method: 'GET',
     path: '/api/postAll',
     handler: postActions.getAllPosts,
   },
   {
     method: 'GET',
-    path: 'api/post/{postId}',
+    path: '/api/postAll/next',
+    handler: postActions.getNextPosts,
+  },
+  {
+    method: 'GET',
+    path: '/api/posts/{postId}',
     handler: postActions.getPost,
   },
   {
@@ -91,7 +115,7 @@ export default [{
   },
   {
     method: 'POST',
-    path: '/{postId}/comments',
+    path: '/api/{postId}/comments',
     handler: commentAction.createComment,
     options: {
       auth: {

@@ -2,13 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const PostPage = (props: any) => {
+  console.log('PostPage',props)
   const {
     title, 
     textContent, 
     category, 
-    author:{
-    userId,
-  }} = props;
+} = props;
 
   return (
     <article className='layout-center' >
@@ -19,7 +18,7 @@ const PostPage = (props: any) => {
               <Link to={`posts/${category}`} className='category-link'>Категория </Link>
             </li>
             <li className="info-item">
-              <Link to={`posts/${userId}`} className='author-link'>Автор </Link>
+              <Link to={`posts/`} className='author-link'>Автор </Link>
             </li>
             <li className="info-item">
               <span className="create-data">Дата создания</span> 

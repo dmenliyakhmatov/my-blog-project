@@ -7,24 +7,26 @@ interface IPostProps {
   isLoggedIn: boolean;
   isPostLoading: boolean;
   errMsg: string;
-  postsList: [];
+  postsList: [{_id:string}];
   actions: any;
+  postNumber: number;
 }
 
-interface IPostState {
-  isLoggedIn: boolean;
-  isPostLoading: boolean;
-  errMsg: string;
-  postsList: [];
-  actions: any;
-}
-class PostsAll extends React.Component<IPostProps,IPostState > {
+class PostsAll extends React.Component<IPostProps,{} > {
   constructor(props:IPostProps){
     super(props);
   }
 
 componentDidMount() {
-  this.props.actions.fetchAllPosts();
+  this.props.actions.fetchAllPosts(this.props.postNumber);
+}
+
+showMore = () => {
+  this.props.actions.fetchNextPosts(this.props.postNumber);
+}
+
+componentWillUnmount() {
+  this.props.actions.resetPostCounter();
 }
 
   render() {
@@ -32,9 +34,10 @@ componentDidMount() {
       <>
         {
           this.props.postsList?.map((post, i) => (
-            <PostItem {...post} key={`Post_${i}`} />)
+            <PostItem {...post} key={`Post_${post._id}`} />)
           )
         }
+        <button type='button' onClick={this.showMore} >Жмяк</button>
         </>
     )
   }

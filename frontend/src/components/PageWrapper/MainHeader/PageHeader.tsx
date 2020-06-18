@@ -29,6 +29,8 @@ export default function Header(props:HeaderProps) {
         < Link to="/user" >user</Link>
         < Link to="/writing" >writing</Link>
         < Link to={routes.POSTS_ALL_PATH} >posts</Link>
+        < Link to={'/posts/5eea6bc8d0f47467271de27f'} >poasds</Link>
+
       {
         props.isLoggedIn ?
         <div className={"header__user-menu"}>

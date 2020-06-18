@@ -1,9 +1,12 @@
 import React from 'react';
 import './postItemStyle.css'
+import { Link, Switch, Route } from 'react-router-dom';
+import { routes } from '../../../router/routes';
+import PostPageContainer from '../../../containers/Posts/PostPageContainer';
 
 const PostItem = (props: any) => {
-  const {title, textContent} = props;
-  console.log(props)
+  const {title, textContent, _id} = props;
+  // console.log(props)
   return (
     <section className="post-wrapper">
       <div className="post__header">
@@ -12,7 +15,8 @@ const PostItem = (props: any) => {
         <p className="post_data">Дата публикации</p>
       </div>
       <h2 className="post__title">{title}</h2>
-  <p className="short-decription"> {textContent}</p>
+      <Link to={`/post/${_id}`} > <p className="short-decription"> {textContent}</p> </Link>
+  
       {
         props.img && <img src="#" alt="post picture"/>
       }
