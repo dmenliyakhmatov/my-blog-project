@@ -4,13 +4,13 @@ import { routes } from '../../router/routes';
 import UsersContainer from './UserContainer';
 import UserEdit from './UserEdit';
 
-const Users = () => {
+const UserPage = () => {
 
   return (
     <Switch>
-        <Route component={UsersContainer} path={routes.USER_PROFILE_PATH} exact/>
+        <Route component={UsersContainer} path='/' exact/>
         <Route component={UserEdit} path={routes.USER_PROFILE_EDIT} exact/>
       </Switch>
   )
 }
-export default Users;
+export default UserPage;

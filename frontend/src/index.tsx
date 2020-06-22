@@ -8,6 +8,8 @@ import Pages from './router/Pages/Pages'
 import {routes} from './router/routes'
 import {enumToArray} from './helpers'
 import { ConnectedRouter } from 'connected-react-router';
+// import 'fomantic-ui-less/semantic.less'
+// import 'semantic-ui-css/semantic.min.css';
 
 const paths = enumToArray(routes)
 

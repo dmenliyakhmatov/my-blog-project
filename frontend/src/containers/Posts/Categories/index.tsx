@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import actions from '../../../actions/post';
+import actions from '../../../store/post/actions';
 import PostItem from '../../../components/Post/PostItem';
 
 interface IPostProps {

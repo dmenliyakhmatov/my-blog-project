@@ -1,5 +1,4 @@
-import { GET_USERS_SUCCESS, GET_USERS_FAIL, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS } from './../constants/index';
-import { GET_POSTS_LOADING } from './../constants';
+import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS } from '../../constants';
 
 const initialState = {
   isLoggedIn: false,

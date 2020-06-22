@@ -1,8 +1,8 @@
 import * as React from "react";
-
-import Posts from '../Posts'
 import './main.css'
-import { Router } from "react-router-dom";
+import { Router, Redirect } from "react-router-dom";
+import UserPage from "../UserPage";
+
 
 // 'HelloWorldProps' describes our props structure.
 // For the state, we use the '{}' type.
@@ -17,12 +17,17 @@ export default class MainContainer extends React.Component {
  
 
     render() {
+
       return(
         
-        <div className={'homePage'}>
-          {console.log('EEEEEEEE')}
-          Main page
-        </div>
+        <>
+        {/* <UserPage /> */}
+        </>
+
+        // <div className={'homePage'}>
+        //   {console.log('EEEEEEEE')}
+        //  <>
+        // </div>
 
       )
 }

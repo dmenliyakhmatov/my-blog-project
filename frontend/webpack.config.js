@@ -3,6 +3,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPugin = require('mini-css-extract-plugin');
 const BrowserSyncWebpackPlugin = require('browser-sync-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   mode: 'development',
@@ -53,7 +54,8 @@ module.exports = {
       { 
         test: /\.tsx?$/, 
         loader: "ts-loader" 
-      }
+      },
+
     ]
   },
   
@@ -67,7 +69,7 @@ module.exports = {
       ]
     }),
     new HtmlWebpackPlugin({
-      //inject: false,
+      // inject: false,
       hash: true,
       template: path.resolve(__dirname, 'src/index.html'),
       filename: 'index.html',
@@ -82,6 +84,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx','.js', '.css', '.jsx']
+    extensions: ['.ts', '.tsx','.js', '.css', '.jsx'],
   }
 }

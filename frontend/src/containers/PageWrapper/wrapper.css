@@ -4,6 +4,7 @@
 }
 
 .center-column {
+  width: 640px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -17,3 +17,4 @@ const Posts = () => {
   )
 }
 export default Posts;
+// {routes.POSTS_ALL_PATH}

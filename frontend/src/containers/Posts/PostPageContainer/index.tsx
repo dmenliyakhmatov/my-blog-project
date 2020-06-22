@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import actions from '../../../actions/post';
+import actions from '../../../store/post/actions';
 import PostPage from '../../../components/Post/PostPage';
 import CommentBlock from '../../../components/Post/CommentBlock';
 import CommentFormContainer from '../CommentFormContainer';

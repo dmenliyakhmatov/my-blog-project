@@ -1,9 +1,8 @@
-import { GET_USER_POST_SUCCESS } from './../constants/index';
-import { UserData } from './../components/PageWrapper/MainHeader/PageHeader';
-import { USER_INPUT_LOGIN_CHANGED, USER_TRY_TO_LOG_IN, GET_USERS_SUCCESS, GET_USERS_LOADING, GET_USERS_FAIL, USER_TRY_TO_LOG_OUT} from '../constants';
+import { USER_INPUT_LOGIN_CHANGED, USER_TRY_TO_LOG_IN, GET_USERS_SUCCESS, GET_USERS_LOADING, GET_USERS_FAIL, USER_TRY_TO_LOG_OUT, GET_USER_POST_SUCCESS } from '../../constants';
 
 interface IUserState {
     userLogin: string;
+    loggedUserId?: string;
     token?: string;
     isLoggedIn: boolean;
     isUsersLoading: boolean;

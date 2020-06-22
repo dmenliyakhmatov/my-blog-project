@@ -3,7 +3,7 @@ import UserCard from '../../../components/User/UserCard';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PostItem from '../../../components/Post/PostItem'
-import actions from '../../../actions/user';
+import actions from '../../../store/user/actions';
 // 'HelloWorldProps' describes our props structure.
 // For the state, we use the '{}' type.
 interface UserState {

@@ -1,8 +1,9 @@
 import React from 'react';
 import './PageHeader.css';
-import logo from '../../../img/logoza.png';
+import logo from '../../../assets/img/logoza.png';
 import {Link} from 'react-router-dom';
 import { routes } from '../../../router/routes'
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 export interface UserData{
   name:string;
   surname?:string;
@@ -44,8 +45,8 @@ export default function Header(props:HeaderProps) {
         </div>
         :
         <div className={"header__login-menu"}>
-        <button className={"header__user-menu_notice"} name={'Notice'}></button>
-        <button className={"header__button login"}>Войти</button>
+          <AccountCircleOutlinedIcon />
+          <span>Войти</span>
       </div>
     
       }

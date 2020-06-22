@@ -7,7 +7,8 @@
   position: sticky;
   top: 0;
   left: 0;
-  background-color: aqua;
+  background-color: #F6D754;
+  
   width: 100%;
 }
 
@@ -66,6 +67,11 @@
   height: 50px;
 }
 
+.header__login-menu:hover{
+  color: rgb(0, 162, 255);
+  cursor: pointer;
+}
+
 .header__button {
   width: 70px;
   height: 30px;
@@ -79,7 +85,7 @@
   cursor: pointer;
   width: 20px;
   height: 20px;
-  background: url(../../../img/icons/notice.svg) no-repeat;
+  background: url(../../../assets/img/icons/notice.svg) no-repeat;
   margin-right: 5px;
 }
 
@@ -91,7 +97,7 @@
 }
 
 .login::before {
-  content: url(../../../img/icons/login_icon.svg);
+  content: url(../../../assets/img/icons/login_icon.svg);
   position: absolute;
   left: -7px;
   width: 17px;
