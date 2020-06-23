@@ -14,12 +14,10 @@ export default class PageWrapper extends React.Component<{},{}> {
     return (<>
       <PageHeader />
       <div className="content-box">
-
         <Filters />
         <section className="center-column">
-        {this.props.children}
+          {this.props.children}
         </section>
-
         <LiveBlock />
       </div>
       </>

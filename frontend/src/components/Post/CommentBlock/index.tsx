@@ -1,13 +1,13 @@
 import React from 'react';
 import Comment from '../Comment'
+import './commentBlockStyle.css'
 
 const CommentBlock = (props: any) => {
 
     return(
       <section className="comments_container">
-        <div className="comment-wrapper">
           <Comment {...props} />
-        </div>
+
       </section>
     );
 };

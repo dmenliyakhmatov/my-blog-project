@@ -8,7 +8,6 @@ import PageWrapper from '../../containers/PageWrapper'
 const Pages = () => {
   return (
       <PageWrapper >
-                  {console.log('24214')}
         <Main />
         <Posts />
         <Users />

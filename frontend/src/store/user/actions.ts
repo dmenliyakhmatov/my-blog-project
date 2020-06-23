@@ -21,12 +21,16 @@ export default {
     },
     fetchUser() {
         return async (dispatch: any, getStore: any) => {
-            const store = getStore();
+            const {user} = getStore();
             dispatch({
                 type: constants.GET_USERS_LOADING,
             });
             try {
-                const response = await axios.get(`http://localhost:5000/api/info/${'96f0474a-be0e-4a90-b341-94b484be2d56'}`);
+                const response = await axios({
+                    method: 'GET',
+                    url: `http://localhost:5000/api/info/${'96f0474a-be0e-4a90-b341-94b484be2d56'}`,
+                    headers: {token: user.token},
+                });
                 dispatch({
                     type: constants.GET_USERS_SUCCESS,
                     payload: response.data
@@ -42,9 +46,9 @@ export default {
     fetchNextPosts(postNumber: number) {
         return async (dispatch: any, getStore: any) => {
             const store = getStore();
-            dispatch({
-                type: constants.GET_USERS_LOADING,
-            });
+            // dispatch({
+            //     type: constants.GET_USERS_LOADING,
+            // });
             try {
                 const response = await axios({
                     method: 'GET',
@@ -65,4 +69,5 @@ export default {
             }
         };
     },
+
 }

@@ -54,28 +54,36 @@ export default {
     }
   },
   getInfo: async (request, h) => {
-    // console.log(request.headers)
-    try {const queryUserId = request.params.userId;
-    const user = await database.user
-        .findOne({userId: queryUserId})
+    try {
+      const paramsUserId = request.params.userId;
+      const token = request.headers.token;
+      let isCurrentUserPage = false;
+      const user = await database.user
+        .findOne({userId: paramsUserId})
         .populate({
           path: 'posts',
-          limit: 4
+          options: { sort: { 'createdAt': -1 } },
+          limit: 4,
+
         });
-        console.log(user.posts.length)
-    if(user) {
-      const userInfo = {
+        const authUser = await database.user.findOne({ token });
+        console.log(user)
+        if(authUser) {
+          isCurrentUserPage = authUser.userId === paramsUserId;
+        }
+
+      if(user) {
+        const userInfo = {
         name: user.name,
         surname: user.surname,
         birthDate: user.birthDate,
-        posts: user.posts
-      }
-      return userInfo;
-    } else {
-      return null
-    }} catch {
-      console.log(e);
-      return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
+        };
+        return { userInfo,  userPosts: user.posts, isCurrentUserPage};
+      } else {
+        return Boom.notFound('Пользователь не найден');
+      }} catch(e) {
+        console.log(e);
+        return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
     }
   },
   getNextUserPost: async (request, h) => {
@@ -87,7 +95,11 @@ export default {
         .findOne({userId: queryUserId})
         .populate({
           path: 'posts',
-          options: { limit: 4, skip: postNumber }
+          options: { 
+            limit: 4, 
+            skip: postNumber, 
+            sort: { 'createdAt': -1 } 
+          }
         });
         
     if(user) {

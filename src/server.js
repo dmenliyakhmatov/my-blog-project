@@ -28,7 +28,7 @@ const init = async () => {
                 origin: ['*'],
                 credentials: true,
                 headers: ["Accept", "Content-Type", "Authorization", "Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"],
-                additionalHeaders: ['X-Requested-With', 'postNumber', "Authorization"]
+                additionalHeaders: ['X-Requested-With', 'postNumber', "Authorization", 'token']
             },
         }
     });

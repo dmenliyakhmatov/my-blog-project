@@ -7,17 +7,20 @@ import Button from '@material-ui/core/Button';
 const UserCard = (props: any) => {
   const {userData :{
     name,
-    surname
-  }} = props;
-  console.log(props)
+    surname,
+  },
+  isCurrentUserPage,
+  } = props;
   return (
     <section className="user-card__wrapper">
       <div className="user-card_top">
         <img width="55" height="55" src={defaultAvatar} alt="user avatar" className="user-card__avatar"/>
         <div className="user-card__setting-area">
-        <Button variant="outlined">
-          <SettingsOutlinedIcon />  
-        </Button>
+        {isCurrentUserPage && 
+          <Button variant="outlined">
+            <SettingsOutlinedIcon />  
+          </Button>
+        }
           
         </div> 
       </div>

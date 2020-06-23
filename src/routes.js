@@ -160,7 +160,8 @@ export default [{
   method:'POST',
   path:'/upload',
   handler: (req, h) => {
-    const { payload } = req
+    const { payload } = req;
+   console.log(payload)
     try {
       const handleFileUpload = file => {
         return new Promise((resolve, reject) => {

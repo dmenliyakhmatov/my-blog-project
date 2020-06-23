@@ -35,11 +35,11 @@ class PostPageContainer extends React.Component<IPostProps,{}> {
       <>
       {this.props.isPostLoading && <span>Загрузка...</span>}
       {console.log(this.props)}
-      { this.props.postData && <>
+      { this.props.postData && <div>
         <PostPage {...this.props.postData} />
         <CommentBlock />
         <CommentFormContainer postId={this.props.match.params.postId} />
-        </>
+        </div>
         }
       </>
     )

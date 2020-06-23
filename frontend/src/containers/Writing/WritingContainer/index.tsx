@@ -1,10 +1,25 @@
 import React from 'react';
+import WritingForm from '../../../components/WritingForm'
+import axios from 'axios';
 
- const WritingContainer = (props:any) => {
-   console.log('1111swq')
-  return (
-    <h1> Writing page</h1>
-  );
-};
+ class WritingContainer extends React.Component<{}, {}> {
+
+onSubmit = (formData: any) => {
+  
+  console.log(formData)
+}
+init = {
+  postComment:'sda',
+  file:'',
+}
+  render() {
+    return (
+      <WritingForm onSubmit={this.onSubmit} initialValues={this.init}/>
+    )
+
+  }
+ }
+
+
 
 export default WritingContainer;

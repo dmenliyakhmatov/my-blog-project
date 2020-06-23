@@ -2,9 +2,9 @@ import { USER_INPUT_LOGIN_CHANGED, USER_TRY_TO_LOG_IN, GET_USERS_SUCCESS, GET_US
 
 interface IUserState {
     userLogin: string;
-    loggedUserId?: string;
     token?: string;
     isLoggedIn: boolean;
+    isCurrentUserPage: boolean;
     isUsersLoading: boolean;
     errMsg: string;
     postNumber: number;
@@ -12,17 +12,20 @@ interface IUserState {
         name: string,
         surname: string,
         userId: string,
-        posts: [string]
     }
+    userPosts: []
+    
 }
 
 const initialState: IUserState = {
     userLogin: '',
+    isCurrentUserPage: false,
     token: 'e98649fd-c5fd-4471-a7f8-bb6de401d689',
     isLoggedIn: false,
     isUsersLoading: false,
     errMsg: '',
     postNumber: 4,
+    userPosts: []
 };
 
 const actionExample = {
@@ -61,18 +64,19 @@ export default function userReducer(state = initialState, action:any) {
         case GET_USERS_SUCCESS:
             return {
                 ...state,
-                userData: action.payload,
+                userData: action.payload.userInfo,
+                userPosts: action.payload.userPosts,
+                isCurrentUserPage: action.payload.isCurrentUserPage,
                 isUsersLoading: false,
             };
 
         case GET_USER_POST_SUCCESS:{
-            const prevPosts = state.userData?.posts;
+            const prevPosts = state.userPosts;
             const nextPostNumber = state.postNumber + 4;
             return {
                 ...state,
-                userData: {
-                    posts: [...prevPosts, ...action.payload.posts ]
-                },
+                    userPosts: [...prevPosts, ...action.payload.posts ],
+
                 postNumber: nextPostNumber
             }
 }

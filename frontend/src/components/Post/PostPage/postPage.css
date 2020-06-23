@@ -1,0 +1,77 @@
+.layout-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  font-size: 18px;
+}
+
+.post__header-wrapper {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.post__header-information_row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  list-style: none;
+}
+
+.post__header__info-item {
+  display: flex;
+  align-items: center;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 25px;
+}
+
+.category-link {
+  font-weight: 500;
+}
+
+.create-data,
+.views-value {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgb(128, 128, 128)
+}
+
+.views {
+  color: rgb(128, 128, 128);
+  margin-right: 5px;
+}
+
+.post_title-container {
+  margin-bottom: 10px;
+}
+
+.post_title {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.btn-block{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.btn_comment {
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.btn_comment:hover {
+  color: rgb(243, 243, 115)
+}
+
+.btn_favorite {
+border: none;
+background-color: transparent;
+}
