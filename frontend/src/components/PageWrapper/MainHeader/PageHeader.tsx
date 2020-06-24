@@ -9,12 +9,13 @@ export interface UserData{
   surname?:string;
   birthDate?:string;
   userId?: string;
-  avatarUrl:string
+  avatarUrl:string;
 }
 
 export interface HeaderProps {
   user?: UserData;
   isLoggedIn?: boolean;
+  handleLogInButton: () => void;
 }
 
 export default function Header(props:HeaderProps) {
@@ -44,7 +45,7 @@ export default function Header(props:HeaderProps) {
           </div>
         </div>
         :
-        <div className={"header__login-menu"}>
+        <div className={"header__login-menu"} onClick={props.handleLogInButton}>
           <AccountCircleOutlinedIcon />
           <span>Войти</span>
       </div>

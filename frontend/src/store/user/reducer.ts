@@ -35,12 +35,6 @@ const actionExample = {
 
 export default function userReducer(state = initialState, action:any) {
     switch (action.type) {
-        case USER_INPUT_LOGIN_CHANGED:
-            return {
-                ...state,
-                userLogin: action.payload,
-            };
-
         case USER_TRY_TO_LOG_IN:
             const login = state.userLogin;
             return {

@@ -2,13 +2,6 @@ import * as constants from '../../constants';
 import axios from 'axios';
 
 export default {
-    saveUserInputValue(value:any) {
-        console.log('in action creator saveUserInputValue', value);
-        return {
-            type: constants.USER_INPUT_LOGIN_CHANGED,
-            payload: value,
-        };
-    },
     onLogin() {
         return {
             type: constants.USER_TRY_TO_LOG_IN,
