@@ -2,7 +2,9 @@ import React from 'react';
 import PageHeader from '../../components/PageWrapper/MainHeader/PageHeader';
 import Filters from '../PageWrapper/SideBar';
 import LiveBlock from '../PageWrapper/LiveBlock/LiveBlock';
+import AuthModal from '../AuthModal';
 import './wrapper.css';
+
 
 export default class PageWrapper extends React.Component<{},{}> {
   constructor(props:{}) {
@@ -20,6 +22,7 @@ export default class PageWrapper extends React.Component<{},{}> {
         </section>
         <LiveBlock />
       </div>
+      <AuthModal />
       </>
     )
   }

@@ -5,13 +5,14 @@ import Boom from 'boom';
 export default {
   createPost: async (request, h) => {
     try{
-      const {title, textContent} = request.payload;
+      const {title, shortDiscription, textContent} = request.payload;
       const authorOfPost = request.auth.credentials;
 
       let newPost = new database.post({
         _id: new mongoose.Types.ObjectId(),
         title: title,
         textContent: textContent,
+        shortDiscription,
         userId: authorOfPost.userId,
       });
 
@@ -21,7 +22,7 @@ export default {
       console.log('!!!!')
       await database.user.updateOne({userId:authorOfPost.userId}, {$push: {posts: newPost._id}})
 
-      return "Пост успешно создан"
+      return newPost._id
     } catch(e) {
       console.log(e)
       return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')

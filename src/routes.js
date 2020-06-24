@@ -4,6 +4,9 @@ import usersActions from './controllers/user.js'
 import postActions from './controllers/post.js'
 import commentAction from './controllers/comment.js';
 import fs from 'fs';
+import database from './database/connection.js';
+import mongoose from 'mongoose';
+import Boom from 'boom';
 
 export default [{
     method: 'POST',
@@ -68,7 +71,7 @@ export default [{
   },
   {
     method: 'POST',
-    path: '/writing',
+    path: '/api/writing',
     handler: postActions.createPost,
     options: {
       auth: {
@@ -136,10 +139,10 @@ export default [{
   },
   {
     method: 'GET',
-    path: '/{file*}',
+    path: '/cover/{file*}',
     handler: {
       directory: {
-        path: './src/public',
+        path: './src/public/img/covers',
         redirectToSlash: true,
         index: true,
       }
@@ -159,9 +162,8 @@ export default [{
 {
   method:'POST',
   path:'/upload',
-  handler: (req, h) => {
+  handler: async (req, h) => {
     const { payload } = req;
-   console.log(payload)
     try {
       const handleFileUpload = file => {
         return new Promise((resolve, reject) => {
@@ -173,18 +175,23 @@ export default [{
               console.log(err)
               reject(err)
             }
-            resolve({ message: 'Upload successfully!' })
+            resolve(filename)
           })
         })
       }
+      
+      const response = await handleFileUpload(payload.file)
+      await database.post.findByIdAndUpdate(payload.postId, {coverUrl: response}, function(err, user){
+        if(err) return console.log(err);
+      })
+      return 'Пост успешно изменен'
+    }
+      // return response;
 
       
-      const response = handleFileUpload(payload.file)
-      return response;
 
-      
-
-    } catch(e) {
+    // }
+     catch(e) {
       console.log(e)
     }
   },

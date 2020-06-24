@@ -33,8 +33,9 @@ export default {
  },
  postData: {
    payload: Joi.object({
-    title: Joi.string().min(1).required(),
-    textContent: Joi.string().min(50).required()
+    title: Joi.string().required(),
+    shortDiscription: Joi.string().optional(),
+    textContent: Joi.string().required()
    })
  },
  allPostsData: {

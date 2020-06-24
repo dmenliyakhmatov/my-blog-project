@@ -10,13 +10,16 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
+    shortDiscription: {
+      type: mongoose.Schema.Types.String,
+    },
     textContent: {
       type: mongoose.Schema.Types.String,
       required:true,
     },
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'comment'
+      ref: 'comment',
     }],
     userId: {
       type: mongoose.Schema.Types.String,
@@ -31,6 +34,9 @@ const schema = new mongoose.Schema(
       type:mongoose.Schema.Types.Number,
       required: true,
       default: 0
+    },
+    coverUrl: {
+      type:mongoose.Schema.Types.String,
     }
   },
   {

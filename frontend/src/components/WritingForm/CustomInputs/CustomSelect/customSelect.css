@@ -1,0 +1,17 @@
+.select-styled {
+display: flex;
+cursor: pointer;
+}
+
+.select-img {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-right: 12px;
+}
+.select_placeholder {
+  min-width: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

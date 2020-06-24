@@ -1,0 +1,23 @@
+.auth__wrapper {
+  display: block;
+  position: fixed;
+  top: 100px;
+  left: 400px;
+  z-index: 15;
+}
+
+.auth__container {
+  width: 400px;
+  height: 600px;
+}
+.popup {
+  position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.75;
+    z-index: 10;
+    will-change: top;
+}

@@ -95,6 +95,37 @@ export default {
     return {
         type: LEAVE_POSTS_PAGE,
     }
-}
+},
+  publishPost(formData:{}, img:File) {
+    return async (dispatch:any, getStore:any) => {
+      const {user} = getStore();
+      dispatch({
+        type: GET_POSTS_LOADING,
+      });
+      try {
+        console.log(formData)
+      // const response = await axios({
+      //   method: 'POST',
+      //   url: 'http://localhost:5000/api/writing',
+      //   data: formData,
+      //   headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+      // });
 
+      const imgData = new FormData();
+      imgData.append('file', img);
+      imgData.append('postId', '5ef27b10b5a641522819ac4c')
+      const imgResponse = await axios({
+        method: 'POST',
+        url: 'http://localhost:5000/upload',
+        data: imgData,
+        headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+      })
+      } catch (e) {
+        dispatch({
+          type: GET_POSTS_FAIL,
+          payload: e.messsage,
+        });
+      }
+    }
+  }
 }

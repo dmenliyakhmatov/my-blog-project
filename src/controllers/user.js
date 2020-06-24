@@ -67,7 +67,6 @@ export default {
 
         });
         const authUser = await database.user.findOne({ token });
-        console.log(user)
         if(authUser) {
           isCurrentUserPage = authUser.userId === paramsUserId;
         }
@@ -90,7 +89,6 @@ export default {
     try {
       const postNumber = +request.headers.postnumber;
       const queryUserId = request.params.userId;
-      console.log(postNumber); 
       const user = await database.user
         .findOne({userId: queryUserId})
         .populate({
