@@ -10,8 +10,8 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 
 const PostItem = (props: any) => {
-  const {title, textContent, _id, coverUrl} = props;
-  // console.log(props)
+  const {title, shortDiscription, _id, coverUrl} = props;
+  console.log(props)
   return (
     <section className="post__wrapper">
       <div className="post-header">
@@ -25,7 +25,7 @@ const PostItem = (props: any) => {
       </div>
       <h2 className="post__title">{title}</h2>
       <div className="post__short">
-      <Link to={`/post/${_id}`} > <p className="short-decription"> {textContent}</p> </Link>
+      <Link to={`/post/${_id}`} > <p className="short-decription"> {shortDiscription}</p> </Link>
         {
           coverUrl && <img src='http://localhost:5000/cover/1036242.png ' width='600' height='400' alt="post picture"/>
         }

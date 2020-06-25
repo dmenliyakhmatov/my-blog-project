@@ -14,12 +14,14 @@ export default {
 
       if(likeIndex < 0) {
         post.likes.push(mongoUserId);
+        post.likesCount = post.likes.length;
         post.save(function (err) {
           if (err) throw err;
         })
         return 'Лайк удален'
       } else {
         post.likes.splice(likeIndex, 1);
+        post.likesCount = post.likes.length;
         post.save(function (err) {
           if (err) throw err;
         })

@@ -14,9 +14,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required:true
     },
-    userId: {
-      type: mongoose.Schema.Types.String,
-      required:true
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      required:true,
+      ref: 'user'
     }
   },
   {

@@ -6,7 +6,7 @@ export default {
   createComment: async (request, h) => {
     const commentData = request.payload.commentBody;
     const postId = request.params.postId;
-    const userId = request.auth.credentials.userId;
+    const userId = request.auth.credentials._id;
     const foundPost = await database.post.findById(postId);
 
     if(foundPost) {
@@ -14,7 +14,7 @@ export default {
         _id: new mongoose.Types.ObjectId(),
         postId: postId,
         commentBody: commentData,
-        userId: userId
+        author: userId
       })
       
       newComment.save(function (err) {

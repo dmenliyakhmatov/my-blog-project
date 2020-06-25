@@ -32,14 +32,37 @@ export default {
   getPost: async (request, h) => {
     try {
       const postId = request.params.postId;
-      const postData = await database.post.findById(postId);
+      const post = await database.post
+          .findById(postId)
+          .populate
+          .populate({
+            path: 'comments',
+            populate: {
+              path: 'author',
+              select: ['name', 'surname', 'userId', 'avatartUrl']
+            }
+          });
       
-      if(!postData) {
+      if(!post) {
         return Boom.notFound('Страница не найдена')
       }
       await database.post.
           updateOne({_id: postId}, {$inc:{pageViews: 1}});
-          
+
+      const createdData = `${post.createdAt.getDate()}-${post.createdAt.getMonth()+1}-${post.createdAt.getFullYear()}`;
+      const postData = {
+        _id: post._id,
+        title: post.title,
+        shortDiscription: post.shortDiscription,
+        textContent: post.textContent,
+        comments: post.comments,
+        likesCount: post.likesCount,
+        pageViews: post.pageViews,
+        coverUrl: post.coverUrl,
+        createdData
+      }
+      
+
       return postData;
         
     } catch(e) {
@@ -90,7 +113,16 @@ export default {
   getAllPosts: async (request, h) => {
     try {
   
-      const postList = await database.post.find({},{title: true, textContent:true}).limit(4);
+      const postList = await database.post
+        .find({},
+          {
+            title: true, 
+            textContent:true, 
+            shortDiscription: true, 
+            coverUrl:true}, 
+            {sort: { 'createdAt': -1 }
+          })
+        .limit(4);
       
       return postList;
         
@@ -102,8 +134,19 @@ export default {
   getNextPosts: async (request, h) => {
     try {
       const postNumber = +request.headers.postnumber;
-      const postList = await database.post.find({},{title: true, textContent:true}).limit(4).skip(postNumber);
-      console.log(postNumber)
+      const postList = await database.post
+        .find({},
+          {
+            title: true,
+            textContent:true,
+            shortDiscription: true, 
+            coverUrl:true
+          },
+          {sort: { 'createdAt': -1 }
+        })
+        .limit(4)
+        .skip(postNumber);
+        
       return postList;
         
     } catch(e) {

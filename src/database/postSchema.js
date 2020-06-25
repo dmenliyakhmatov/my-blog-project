@@ -30,6 +30,9 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user'
     }],
+    likesCount: {
+      type: mongoose.Schema.Types.Number,
+    },
     pageViews: {
       type:mongoose.Schema.Types.Number,
       required: true,

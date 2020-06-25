@@ -25,9 +25,7 @@ export default class CommentFormContainer extends React.Component<ICommentProps,
 
   render() {
     return (
-      <div className='comment-wrapper'>
         <CommentForm onSubmit={this.handleSubmit} />
-      </div>
     )
   }
 }

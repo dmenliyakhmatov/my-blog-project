@@ -32,6 +32,7 @@ componentWillUnmount() {
   render() {
     return(
       <>
+      {console.log(this.props.postsList)}
         {
           this.props.postsList?.map((post, i) => (
             <PostItem {...post} key={`Post_${post._id}`} />)

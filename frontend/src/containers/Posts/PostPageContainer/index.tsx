@@ -25,7 +25,6 @@ class PostPageContainer extends React.Component<IPostProps,{}> {
   }
 
   componentDidMount() {
-    console.log("!!!")
     this.props.actions.fetchOnePost(this.props.match.params.postId)
   }
 
@@ -33,11 +32,11 @@ class PostPageContainer extends React.Component<IPostProps,{}> {
     
     return(
       <>
+      {console.log('!!!', this.props.postData)}
       {this.props.isPostLoading && <span>Загрузка...</span>}
-      {console.log(this.props)}
       { this.props.postData && <div>
         <PostPage {...this.props.postData} />
-        <CommentBlock />
+        <CommentBlock  {...this.props.postData} />
         <CommentFormContainer postId={this.props.match.params.postId} />
         </div>
         }

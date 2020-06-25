@@ -8,7 +8,7 @@ const UserPage = () => {
 
   return (
     <Switch>
-        <Route component={UsersContainer} path='/' exact/>
+        <Route component={UsersContainer} path={routes.USER_PROFILE_PATH} exact/>
         <Route component={UserEdit} path={routes.USER_PROFILE_EDIT} exact/>
       </Switch>
   )

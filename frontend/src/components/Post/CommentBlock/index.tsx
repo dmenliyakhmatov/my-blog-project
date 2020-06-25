@@ -3,10 +3,15 @@ import Comment from '../Comment'
 import './commentBlockStyle.css'
 
 const CommentBlock = (props: any) => {
-
+  const { comments, } = props;
     return(
       <section className="comments_container">
-          <Comment {...props} />
+          {
+            comments &&
+            comments.map((comment: any) => (
+              <Comment {...comment} key={comment._id} />
+            ))
+          }
 
       </section>
     );
