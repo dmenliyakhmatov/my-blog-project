@@ -21,15 +21,15 @@ export default {
           email: userData.email,
           password: passwordHash,
           birthDate: userData.birthDate,
+          token: uuid.v4(),
         });
-        
-        newUser.save(function (err) {
+        await newUser.save(function (err) {
           if (err) throw err;
         })
+        return newUser.token;
       } else {
-        return 'Пользователь с таким email уже существует'
+        return Boom.badRequest("Пользователь с таким логином уже существует")
       }
-      return 'Пользователь успешно зарегистрирован!';
     } catch(e) {
       console.log(e);
         return Boom.badImplementation('Произошла ошибка при регистрации, попробуйте позднее');

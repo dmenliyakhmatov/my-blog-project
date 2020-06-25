@@ -1,11 +1,62 @@
+import { REGISTRATION_FAIL } from './../../constants/index';
 import * as constants from '../../constants';
 import axios from 'axios';
+import { ILoginForm } from '../../interfaces';
 
 export default {
-    onLogin() {
+    modalActivate(nextModalState: boolean) {
+        console.log(nextModalState)
         return {
-            type: constants.USER_TRY_TO_LOG_IN,
-        };
+            type: constants.SET_MODAL_STATE,
+            payload: nextModalState,
+        }
+    },
+    onLogin(formData: ILoginForm) {
+        return async (dispatch: any) => {
+            dispatch({
+                type: constants.LOGIN_WAITING
+            });
+            try {
+                const response = await axios ({
+                    method: 'POST',
+                    url: `http://localhost:5000/api/login`,
+                    data: formData,
+                });
+                console.log(response.data)
+                dispatch({
+                    type: constants.LOGIN_SUCCESS,
+                    payload: response.data,
+                })
+            } catch (e) {
+                dispatch({
+                    type: constants.LOGIN_FAIL,
+                    payload: e.message,
+                });
+            }
+        }
+    },
+    registration(formData: ILoginForm) {
+        return async (dispatch: any) => {
+            dispatch({
+                type: constants.USER_TRY_TO_REGISTRATE
+            });
+            try {
+                const response = await axios ({
+                    method: 'POST',
+                    url: `http://localhost:5000/api/register`,
+                    data: formData,
+                });
+                dispatch({
+                    type: constants.REGISTRATION_SUCCESS,
+                    payload: response.data,
+                })
+            } catch (e) {console.log('!!!!!')
+                dispatch({
+                    type: constants.REGISTRATION_FAIL,
+                    payload: e.message,
+                });
+            }
+        }
     },
     onLogout() {
         return {

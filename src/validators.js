@@ -9,14 +9,14 @@ export default {
      name: Joi.string().required(),
      surname: Joi.string().required(),
      email: Joi.string().email().required(),
-     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/),
-     birthDate: Joi.date().format("DD/MM/YYYY"),
+     password: Joi.string(),
+     birthDate: Joi.date().format("DD-MM-YYYY").required(),
    })
  },
   loginData:{
     payload: Joi.object({
       email: Joi.string().email().required(),
-      password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/),
+      password: Joi.string(),
     })
   },
   getInfo: {

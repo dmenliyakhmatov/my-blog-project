@@ -15,6 +15,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required:true,
     },
+    birthDate: {
+      type: mongoose.Schema.Types.Date,
+      required: true,
+    },
     email: {
       type: mongoose.Schema.Types.String,
       required:true,

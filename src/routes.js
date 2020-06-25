@@ -10,7 +10,7 @@ import Boom from 'boom';
 
 export default [{
     method: 'POST',
-    path: '/register',
+    path: '/api/register',
     handler: authorization.registration,
       options: {        
       validate: validators.registerData,
@@ -18,7 +18,7 @@ export default [{
   }, 
   { 
     method: 'POST',
-    path: '/login',
+    path: '/api/login',
     handler: authorization.login, 
     options: {
       validate: validators.loginData,

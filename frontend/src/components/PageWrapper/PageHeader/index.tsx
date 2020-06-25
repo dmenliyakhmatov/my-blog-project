@@ -3,6 +3,7 @@ import './PageHeader.css';
 import logo from '../../../assets/img/logoza.png';
 import {Link} from 'react-router-dom';
 import { routes } from '../../../router/routes'
+import defaultAvatar from '../../../assets/img/defaultAvatar.png'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 export interface UserData{
   name:string;
@@ -14,7 +15,7 @@ export interface UserData{
 
 export interface HeaderProps {
   user?: UserData;
-  isLoggedIn?: boolean;
+  isLoggedIn: boolean;
   handleLogInButton: () => void;
 }
 
@@ -40,12 +41,12 @@ export default function Header(props:HeaderProps) {
           <button className={"header__user-menu_notice"}>Notice</button>
           <div>
             <a href="#">
-              <img src={props.user?.avatarUrl} alt="Avatar"/>
+              <img src={props.user?.avatarUrl || defaultAvatar} width="30" alt="Avatar"/>
             </a>
           </div>
         </div>
         :
-        <div className={"header__login-menu"} onClick={props.handleLogInButton}>
+        <div className={"header__login-menu"} onClick={() => props.handleLogInButton()}>
           <AccountCircleOutlinedIcon />
           <span>Войти</span>
       </div>

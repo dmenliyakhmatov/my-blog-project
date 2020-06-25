@@ -30,7 +30,7 @@ const WritingFormComponent = (props:any) => {
       </div>
       <div className="bth_block">
       <Button type='submit' color='primary' variant="contained" size="large" className="writing_submit-btn">Опубликовать</Button> 
-      <Button type='submit' color='secondary' variant="contained">Отмена</Button>
+      <Button type='button' color='secondary' variant="contained">Отмена</Button>
       </div>
       
     </form>
