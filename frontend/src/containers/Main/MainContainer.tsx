@@ -3,6 +3,7 @@ import './main.css'
 import { Router, Redirect } from "react-router-dom";
 import UserPage from "../UserPage";
 import WritingContainer from "../Writing/WritingContainer";
+import PostsAll from "../Posts/PostsAll";
 
 
 // 'HelloWorldProps' describes our props structure.
@@ -10,26 +11,10 @@ import WritingContainer from "../Writing/WritingContainer";
 export default class MainContainer extends React.Component {
   constructor(props:{}) {
     super(props);
-    this.state = {
-      isLoggedIn:false
-    }
   }
-
- 
-
     render() {
-
       return(
-        
-        <>
-        {/* <UserPage /> */}
-        <WritingContainer />
-        </>
-        // <div className={'homePage'}>
-        //   {console.log('EEEEEEEE')}
-        //  <>
-        // </div>
-
+        <PostsAll />
       )
 }
 }

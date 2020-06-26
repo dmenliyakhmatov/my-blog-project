@@ -83,13 +83,23 @@ export default [{
   },
   {
     method: 'GET',
-    path: '/api/postAll',
+    path: '/api/posts/all',
     handler: postActions.getAllPosts,
   },
   {
     method: 'GET',
     path: '/api/postAll/next',
     handler: postActions.getNextPosts,
+  },
+  {
+    method: 'GET',
+    path: '/api/posts/categories/{category}',
+    handler: postActions.getCategoriesPosts,
+  },
+  {
+  method: 'GET',
+  path: '/api/posts/categories/{category}/next',
+  handler: postActions.getNextCategoriesPosts,
   },
   {
     method: 'GET',
@@ -108,7 +118,7 @@ export default [{
   },
   {
     method: 'PUT',
-    path: '/{postId}/edit',
+    path: '/api/{postId}/edit',
     handler: postActions.editPost,
     options: {
       auth: {

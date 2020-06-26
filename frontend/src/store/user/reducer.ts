@@ -1,8 +1,13 @@
-import { REGISTRATION_SUCCESS, LEAVE_POSTS_PAGE } from './../../constants/index';
+import { REGISTRATION_SUCCESS, LEAVE_POSTS_PAGE, GET_DATA_FROM_STORAGE } from './../../constants/index';
 import { GET_USERS_SUCCESS, GET_USERS_LOADING, GET_USERS_FAIL, USER_TRY_TO_LOG_OUT, GET_USER_POST_SUCCESS, LOGIN_WAITING, LOGIN_SUCCESS, SET_MODAL_STATE, USER_TRY_TO_REGISTRATE } from '../../constants';
 
 interface IUserState {
     userLogin?: string;
+    currentUser?: {
+        currentName: string;
+        currentSurname: string,
+        avatarUrl?: string,
+    };
     token?: string;
     isLoggedIn: boolean;
     modal: boolean,
@@ -43,11 +48,36 @@ export default function userReducer(state = initialState, action:any) {
                 ...state,
                 loading:true,
             };
+        case GET_DATA_FROM_STORAGE:
+            return{
+                ...state,
+                currentUser: action.payload.currentUser,         
+                token: action.payload.token,
+                isLoggedIn: true,
+            }
 
         case LOGIN_SUCCESS:
+            localStorage.setItem(
+                'currentId', 
+                action.payload.userId);
+            localStorage.setItem(
+                'currentName',
+                action.payload.name)
+            localStorage.setItem(
+                'currentSurname', 
+                action.payload.surname);
+            localStorage.setItem(
+                'token',
+                action.payload.token,
+            )
             return {
                 ...state,
-                token: action.payload,
+                currentUser: {
+                    currentId: action.payload.userId,
+                    currentName: action.payload.name,
+                    currentSurname: action.payload.surname,
+                },
+                token: action.payload.token,           
                 loading:false,
                 isLoggedIn: true,
                 modal: false,
@@ -60,7 +90,12 @@ export default function userReducer(state = initialState, action:any) {
         case REGISTRATION_SUCCESS: 
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
+                currentUser: {
+                    currentId: action.payload.userId,
+                    currentName: action.payload.name,
+                    currentSurname: action.payload.surname,
+                },              
                 loading:false,
                 modal: false,
                 isLoggedIn:true,
@@ -68,7 +103,8 @@ export default function userReducer(state = initialState, action:any) {
         case USER_TRY_TO_LOG_OUT:
             return {
                 ...state,
-                userLogin: '',
+                currentUser: {},
+                token: '',
                 isLoggedIn: false,
             };
 

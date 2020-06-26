@@ -33,6 +33,7 @@ export default {
  },
  postData: {
    payload: Joi.object({
+     _id: Joi.string().optional(),
     title: Joi.string().required(),
     shortDiscription: Joi.string().optional(),
     textContent: Joi.string().required()

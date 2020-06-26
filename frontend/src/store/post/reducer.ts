@@ -60,9 +60,11 @@ const postReducer = (state = initialState, action: any) => {
         postNumber: 4,
       }
     case CREATE_LIKE:
-      const index = state.postsList.findIndex((post: any) => post._id === action.payload._id );
+      const index = state.postsList.findIndex((post: any) => post._id === action.payload.postId );
+      const newPostData = state.postsList[index];
+      newPostData.likesCount = action.payload.likesCount
       const nextPostsList = [...state.postsList]
-      state.postsList.splice(index, 1, action.payload);
+      nextPostsList.splice(index, 1, newPostData);
       return {
         ...state,
         postsList: nextPostsList,

@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   background-color: #77bfa3;
-  
+  z-index: 50;
   width: 100%;
 }
 
@@ -55,16 +55,27 @@
 
 .header__user-menu {
   display: flex;
+
+}
+
+.header__user-menu_link {
+  display: flex;
   height: 50px;
   align-items: center;
+  justify-content: center;
 }
 
 .header__login-menu{
   display: flex;
   box-sizing: border-box;
   justify-content: center;
-  margin-top: 10px;
+  align-items: center;
   height: 50px;
+}
+
+.user-menu_text {
+  display: inline-block;
+  margin-right: 7px;
 }
 
 .header__login-menu:hover{
@@ -76,17 +87,6 @@
   width: 70px;
   height: 30px;
   margin-left: 10px;
-}
-
-.header__user-menu_notice {
-  margin-top: 5px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  background: url(../../../assets/img/icons/notice.svg) no-repeat;
-  margin-right: 5px;
 }
 
 .login{
@@ -106,3 +106,44 @@
 /*.header__button {
   margin-top: 10px;
 }*/
+.logout-menu_arrow {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.logout-menu_arrow:hover {
+  font-size: 25px;
+}
+
+.isActive {
+  transform: rotate(180deg);
+}
+
+.logout-menu_wrapper {
+  position: absolute;
+  margin-top: 40px;
+  right: 0;
+  width: 100px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 3px;
+}
+
+.logout-menu_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.logout-menu_btn:hover {
+  color: red;
+}
+

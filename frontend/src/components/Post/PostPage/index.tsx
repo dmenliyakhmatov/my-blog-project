@@ -5,20 +5,18 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const PostPage = (props: any) => {
   console.log('PostPage',props)
   const {
+    _id,
     title, 
     shortDiscription,
     coverUrl,
     textContent, 
     category, 
-    postAuthor:{
-      _id,
-      name,
-      surname
-    },
+    postAuthor,
     likesCount,
     pageViews,
     createdData,
@@ -32,7 +30,7 @@ const PostPage = (props: any) => {
               <Link to={`user/${''}`} className='category-link'>Категория </Link>
             </li>
             <li className="post__header__info-item">
-              <Link to={`user/${_id}`} className='author-link'>{`${name} ${surname}`} </Link>
+              <Link to={`user/${postAuthor._id}`} className='author-link'>{`${postAuthor.name} ${postAuthor.surname}`} </Link>
             </li>
             <li className="post__header__info-item">
               <span className="create-data">{createdData}</span> 
@@ -40,6 +38,14 @@ const PostPage = (props: any) => {
             <li className="post__header__info-item">
               <VisibilityOutlinedIcon className="views" fontSize="small" />
               <span className="views-value"> {pageViews} </span> 
+            </li>
+            <li className="post__header__info-item">
+              <Link to={{
+                    pathname:`/writing/${_id}/edit`,
+                    state: { title, shortDiscription, textContent}
+                    }} >
+                <EditOutlinedIcon />
+              </Link>
             </li>
           </ul>
         <div className="post_title-container">

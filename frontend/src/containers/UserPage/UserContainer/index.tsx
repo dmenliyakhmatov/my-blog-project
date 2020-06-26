@@ -26,7 +26,7 @@ interface UserProps {
   postNumber: number;
   match: {
     params: {
-      userId: string
+      userId: string;
     }
   };
 }

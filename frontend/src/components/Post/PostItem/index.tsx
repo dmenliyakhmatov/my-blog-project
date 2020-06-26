@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './postItemStyle.css'
-import { routes } from '../../../router/routes';
 import PostPageContainer from '../../../containers/Posts/PostPageContainer';
 import IconButton from '@material-ui/core/IconButton';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
+
 
 const PostItem = (props: any) => {
   const {
@@ -19,7 +19,7 @@ const PostItem = (props: any) => {
     handleLikeButton,
     likesCount,
     } = props;
-    console.log(props)
+
   return (
     <section className="post__wrapper">
       <div className="post-header">
@@ -49,8 +49,8 @@ const PostItem = (props: any) => {
         </div>
        <div className="post-footer_right">
         <button className="btn btn__like" onClick={()=> handleLikeButton(_id)}>
-          { likesCount}
-          <FavoriteBorderIcon />
+          <span> { likesCount} </span>
+          <FavoriteBorderIcon className="icon" />
         </button>
        </div>
       </div>

@@ -11,6 +11,7 @@ import { ILoginForm, IRegisterForm } from '../../interfaces';
 
 interface IPageWrapperState {
   authActive: boolean;
+  logoutMenu: boolean;
 }
 
 class PageWrapper extends React.Component<any,IPageWrapperState> {
@@ -18,24 +19,52 @@ class PageWrapper extends React.Component<any,IPageWrapperState> {
     super(props);
     this.state ={
       authActive: false,
+      logoutMenu: false,
     }
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.loginSubmit = this.loginSubmit.bind(this);
     this.registrationSubmit = this.registrationSubmit.bind(this);
+    this.onLogoutArrowClick = this.onLogoutArrowClick.bind(this);
+    this.onBlurLogout = this.onBlurLogout.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
   
+  componentDidMount() {
+    if(!this.props.isLoggedIn && localStorage.length!== 0) {
+      const currentUser = {
+        currentName: localStorage.getItem('currentName'),
+        currentSurname: localStorage.getItem('currentSurname'),
+      };
+      const token = localStorage.getItem('token');
+
+      this.props.actions.getDataFromStorage(currentUser, token)
+    }
+  }
+
   closeModal() {
     this.props.actions.modalActivate(false);
   }
 
+  onLogout() {
+    console.log('logout')
+    localStorage.clear();
+    this.props.actions.onLogout();
+  }
+
+  onLogoutArrowClick() {
+    this.setState({logoutMenu: !this.state.logoutMenu});
+  }
+
+  onBlurLogout() {
+    this.setState({logoutMenu: false});
+  }
+
   openModal() {
-    console.log(this.props)
     this.props.actions.modalActivate(true);
   }
 
   loginSubmit(formData: ILoginForm) {
-    console.log('111')
     this.props.actions.onLogin(formData);
   }
 
@@ -43,9 +72,24 @@ class PageWrapper extends React.Component<any,IPageWrapperState> {
     this.props.actions.registration(formData);
   }
 
+  headerProps = {
+    isLoggedIn: this.props.isLoggedIn,
+    currentUser: this.props.currentUser,
+  }
+
   render() {
+    const { isLoggedIn, currentUser } = this.props;
+
     return (<>
-      <PageHeader isLoggedIn={this.props.isLoggedIn} handleLogInButton={this.openModal} />
+      <PageHeader 
+          isLoggedIn={isLoggedIn}
+          currentUser={currentUser}
+          handleLogInButton={this.openModal}
+          onLogoutArrowClick={this.onLogoutArrowClick}
+          onBlurLogout={this.onBlurLogout}
+          logoutMenu={this.state.logoutMenu}
+          onLogout={this.onLogout}
+          />
       <div className="content-box">
         <Filters />
         <section className="center-column">

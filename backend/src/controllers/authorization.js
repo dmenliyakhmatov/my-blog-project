@@ -26,7 +26,12 @@ export default {
         await newUser.save(function (err) {
           if (err) throw err;
         })
-        return newUser.token;
+        return {
+          userId: newUser._id,
+          name: newUser.name,
+          surname: newUser.surname,
+          token: newUser.token,
+        };
       } else {
         return Boom.badRequest("Пользователь с таким логином уже существует")
       }
@@ -43,7 +48,12 @@ export default {
         const foundUser = await database.user.findOne({email:email, password: passwordHash});
 
         if(foundUser) {
-            return foundUser.token;
+            return {
+              userId: foundUser._id,
+              name: foundUser.name,
+              surname: foundUser.surname,
+              token: foundUser.token,
+            };
           } else {
             return Boom.unauthorized('Неверный логин или пароль');
           }

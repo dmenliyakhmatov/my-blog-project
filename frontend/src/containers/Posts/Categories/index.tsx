@@ -8,32 +8,49 @@ interface IPostProps {
   isLoggedIn: boolean;
   isPostLoading: boolean;
   errMsg: string;
-  postsList: [];
+  postsList: [{_id:string}];
   actions: any;
+  postNumber: number;
   match: {
     params: {
-      category: string
+      category: string;
     }
-  };
+  }
 }
 class Categories extends React.Component<IPostProps,{} > {
   constructor(props:IPostProps){
     super(props);
+    this.handleLikeButton = this.handleLikeButton.bind(this);
   }
 
-// componentDidMount() {
-//   this.props.actions.fetchAllPosts(this.props.match.params.category);
-// }
+componentDidMount() {
+  const category = this.props.match.params.category;
+  this.props.actions.fetchCategoriesPosts(category);
+}
+
+showMore = () => {
+  const category = this.props.match.params.category;
+  this.props.actions.fetchNextCategoriesPosts(this.props.postNumber, category);
+}
+
+componentWillUnmount() {
+  this.props.actions.resetPostCounter();
+}
+
+handleLikeButton(postId: string) {
+  this.props.actions.createLike(postId);
+}
 
   render() {
+    {console.log('category')}
     return(
       <>
-        {/* {
-          this.props.postsList?.map((post, i) => (
-            <PostItem {...post} key={`Post_${i}`} />)
+        {
+          this.props.postsList?.map((post) => (
+            <PostItem handleLikeButton={this.handleLikeButton} {...post} key={`Post_${post._id}`} />)
           )
-        } */}
-        <div>Категории</div>
+        }
+        <button type='button' onClick={this.showMore} >Жмяк</button>
         </>
     )
   }

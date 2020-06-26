@@ -92,31 +92,35 @@ export default {
     }
   },
   editPost: async (request, h) => {
-    const postId = request.params.postId;
-    const postData = await database.post.findById(postId);
+    try {
+      const postId = request.params.postId;
+      console.log(postId)
+      const postData = await database.post.findById(postId);
+      if(!postData) {
+        return Boom.notFound('Страница не найдена')
+      }
+  
+      const authUser = request.auth.credentials._id;
+      const changeData = request.payload;
+
+      if (String(authUser) === String(postData.postAuthor)) {
+        await database.post.findByIdAndUpdate(postId, changeData, function(err, user){
+          if(err) return console.log(err);
+        })
+        return 'Пост успешно изменен'
+      } else {
+        return Boom.forbidden('У вас нет прав на данное действие');
+      }
+    } catch(e) {
+      // console.log(e)
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
     
-    if(!postData) {
-      return Boom.notFound('Страница не найдена')
-    }
-
-    const authUser = request.auth.credentials._id;
-    const changeData = request.payload;
-
-
-    if (authUser === postData.userId) {
-      await database.post.findByIdAndUpdate(postId, changeData, function(err, user){
-        if(err) return console.log(err);
-      })
-      return 'Пост успешно изменен'
-    } else {
-      return Boom.forbidden('У вас нет прав на данное действие');
-    }
   },
 
   getAllPosts: async (request, h) => {
     try {
-  
-      const postList = await database.post
+        const postList = await database.post
         .find({},
           {
             _id: true,
@@ -136,6 +140,9 @@ export default {
           select: ['_id', 'name', 'surname'],
         });
       return postList;
+      
+     
+
         
     } catch(e) {
       console.log(e);
@@ -173,4 +180,64 @@ export default {
     }
   },
 
+  getCategoriesPosts: async (request, h) => {
+    try {
+      const category = request.params.category;
+      const postList = await database.post
+        .find({category:category},
+          {
+            _id: true,
+            title: true, 
+            textContent:true, 
+            shortDiscription: true, 
+            coverUrl:true,
+            postAuthor:true,
+            createdAt:true,
+            likesCount:true,
+          }, 
+            {sort: { 'createdAt': -1 }
+          })
+        .limit(4)
+        .populate({
+          path: 'postAuthor',
+          select: ['_id', 'name', 'surname'],
+        });
+      return postList;
+        
+    } catch(e) {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
+  },
+
+  getNextCategoriesPosts: async (request, h) => {
+    try {
+      const category = request.params.category;
+      const postNumber = +request.headers.postnumber;
+      const postList = await database.post
+        .find({category: category},
+          {
+            _id: true,
+            title: true,
+            textContent:true,
+            shortDiscription: true, 
+            coverUrl:true
+          },
+          {sort: { 'createdAt': -1 }
+        })
+        .skip(postNumber)
+        .limit(4)
+        .populate({
+          path: 'postAuthor',
+          select: ['_id', 'name', 'surname'],
+        });
+        
+        
+      return postList;
+        
+    } catch(e) {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
+    }
+  },
 }

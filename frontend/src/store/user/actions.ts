@@ -1,4 +1,4 @@
-import { REGISTRATION_FAIL, LEAVE_USER_PAGE } from './../../constants/index';
+import { REGISTRATION_FAIL, LEAVE_USER_PAGE, GET_DATA_FROM_STORAGE } from './../../constants/index';
 import * as constants from '../../constants';
 import axios from 'axios';
 import { ILoginForm } from '../../interfaces';
@@ -114,7 +114,12 @@ export default {
             }
         };
     },
-
+    getDataFromStorage(currentUser: any, token: string) {
+        return {
+            type: GET_DATA_FROM_STORAGE,
+            payload: { currentUser, token },
+        }
+    },
     resetPostCounter() {
         return {
             type: LEAVE_USER_PAGE,

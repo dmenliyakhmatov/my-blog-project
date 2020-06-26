@@ -8,7 +8,8 @@ import './writingFormStyle.css';
 
 const WritingFormComponent = (props:any) => {
   const {handleSubmit, fileRef} = props;
-  console.log(props)
+  console.log('writing', props)
+
   return (
     <section className="writing_form-wrapepr">
     <form onSubmit={handleSubmit} className="writing_form">

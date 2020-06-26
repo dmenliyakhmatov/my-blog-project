@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import actions from '../../../store/post/actions';
 import PostItem from '../../../components/Post/PostItem';
 interface IPostProps {
-  isLoggedIn: boolean;
-  isPostLoading: boolean;
-  errMsg: string;
-  postsList: [{_id:string}];
-  actions: any;
-  postNumber: number;
+  isLoggedIn?: boolean;
+  isPostLoading?: boolean;
+  errMsg?: string;
+  postsList?: [{_id:string}];
+  actions?: any;
+  postNumber?: number;
 }
 
 class PostsAll extends React.Component<IPostProps,{} > {
@@ -19,7 +19,7 @@ class PostsAll extends React.Component<IPostProps,{} > {
   }
 
 componentDidMount() {
-  this.props.actions.fetchAllPosts(this.props.postNumber);
+  this.props.actions.fetchAllPosts();
 }
 
 showMore = () => {

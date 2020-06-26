@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom';
 import { routes } from '../../../router/routes'
 import defaultAvatar from '../../../assets/img/defaultAvatar.png'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 export interface UserData{
   name:string;
   surname?:string;
@@ -14,39 +16,61 @@ export interface UserData{
 }
 
 export interface HeaderProps {
-  user?: UserData;
+  currentUser?: {
+    currentId:string,
+    currentName: string,
+    currentSurname: string,
+    avatarUrl?: string;
+  }
   isLoggedIn: boolean;
+  logoutMenu: boolean;
   handleLogInButton: () => void;
+  onLogoutArrowClick: () => void;
+  onBlurLogout: () => void;
+  onLogout: () => void;
 }
 
 export default function Header(props:HeaderProps) {
+  const { 
+    currentUser,
+    isLoggedIn,
+    logoutMenu,
+    onLogoutArrowClick,
+    onBlurLogout,
+    onLogout,
+    handleLogInButton,
+  } = props;
+  console.log(props)
   return (
     <div className={"main_header"}>  
       <div className={'header__containter'}>
         <h1 className={'visually-hidden'}>biter's blogs</h1>
 
-        <a href="#" className={'header__logo'}>
+        <Link to="/" className={'header__logo'}>
           <img src={logo} width={50} alt="Biter's blogs"/>
-        </a>
-        <a href="#" className={"newPost"}>Новая запись</a>
-        < Link to="/user" >user</Link>
-        < Link to="/writing" >writing</Link>
-        < Link to={routes.POSTS_ALL_PATH} >posts</Link>
-        < Link to={'/posts/5eea6bc8d0f47467271de27f'} >poasds</Link>
-
+        </Link>
+        <Link to="/writing" className={"newPost"}>Новая запись</Link>
       {
-        props.isLoggedIn ?
-        <div className={"header__user-menu"}>
-          <button className={"header__user-menu_messages"}>Messages</button>
-          <button className={"header__user-menu_notice"}>Notice</button>
-          <div>
-            <a href="#">
-              <img src={props.user?.avatarUrl || defaultAvatar} width="30" alt="Avatar"/>
-            </a>
+        isLoggedIn ?
+        <div className="header__user-menu" >
+            <Link to={`/user/${currentUser?.currentId}`} className={"header__user-menu_link"} >
+              <span className="user-menu_text" >{ currentUser?.currentName } </span>
+              <span className="user-menu_text" >{ currentUser?.currentSurname} </span>
+              <img src={ currentUser?.avatarUrl || defaultAvatar} width="30" alt="Avatar"/>
+            </Link>
+            <button className={`logout-menu_arrow ${logoutMenu ? 'isActive' : ''}`} onClick={onLogoutArrowClick}>
+                <ArrowDropDownOutlinedIcon />
+              </button>
+            { logoutMenu &&
+              <div className="logout-menu_wrapper">
+              <button className="logout-menu_btn" onClick={onLogout} >
+                <span> Выйти </span> 
+                <ExitToAppOutlinedIcon />
+              </button>
+            </div>}
           </div>
-        </div>
         :
-        <div className={"header__login-menu"} onClick={() => props.handleLogInButton()}>
+        <div className={"header__login-menu"} onClick={handleLogInButton}>
           <AccountCircleOutlinedIcon />
           <span>Войти</span>
       </div>

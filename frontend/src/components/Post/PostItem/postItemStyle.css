@@ -7,9 +7,15 @@
 }
 
 .btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   border: none;
   background-color: transparent;
   cursor: pointer;
+  outline: none;
+  min-height: 30;
+  height: 30px;
 }
 
 .post__wrapper:hover {
@@ -67,3 +73,7 @@
 .icon:hover{
   color: red;
 } 
+
+.icon:active {
+  font-size: 25px;
+}
