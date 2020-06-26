@@ -1,6 +1,5 @@
-
 import axios from 'axios';
-import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS } from '../../constants';
+import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS, CREATE_LIKE } from '../../constants';
 
 export default {
   fetchAllPosts() {
@@ -68,6 +67,7 @@ export default {
     }
   },
   fetchNextPosts(postNumber: number) {
+    console.log(postNumber)
     return async (dispatch:any, getStore:any) => {
       dispatch({
         type: GET_POSTS_LOADING,
@@ -98,7 +98,6 @@ export default {
 },
   publishPost(formData:{}, img:File) {
     return async (dispatch:any, getStore:any) => {
-      const {user} = getStore();
       dispatch({
         type: GET_POSTS_LOADING,
       });
@@ -121,6 +120,26 @@ export default {
         headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
       })
       } catch (e) {
+        dispatch({
+          type: GET_POSTS_FAIL,
+          payload: e.messsage,
+        });
+      }
+    }
+  },
+  createLike(postId: string) {
+    return async (dispatch: any) => {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: `http://localhost:5000/api/${postId}/like`,
+          headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+        })
+        dispatch({
+          type: CREATE_LIKE,
+          payload: response.data,
+        })
+      } catch(e) {
         dispatch({
           type: GET_POSTS_FAIL,
           payload: e.messsage,

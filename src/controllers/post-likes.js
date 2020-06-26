@@ -5,27 +5,30 @@ import Boom from 'boom';
 export default {
   createLike: async (request, h) => {
 
-    try {const mongoUserId = request.auth.credentials._id;
+    try {const userId = request.auth.credentials._id;
     const postId = request.params.postId;
     const post = await database.post.findById(postId);
     
-    if(postData) {
-      const likeIndex = post.likes.findIndex(id => id.toString() === mongoUserId.toString())
-
+    if(post) {
+      const likeIndex = post.likes.findIndex(id => id.toString() === userId.toString())
+      console.log('1')
       if(likeIndex < 0) {
-        post.likes.push(mongoUserId);
+        console.log('2')
+        post.likes.push(userId);
         post.likesCount = post.likes.length;
         post.save(function (err) {
           if (err) throw err;
         })
-        return 'Лайк удален'
+        return post;
       } else {
+        console.log('3')
         post.likes.splice(likeIndex, 1);
         post.likesCount = post.likes.length;
         post.save(function (err) {
           if (err) throw err;
         })
-        return 'Лайк поставлен'
+
+        return post;
       }
     }} catch(e) {
       console.log(e);

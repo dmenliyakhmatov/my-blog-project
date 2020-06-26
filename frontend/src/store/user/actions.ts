@@ -1,4 +1,4 @@
-import { REGISTRATION_FAIL } from './../../constants/index';
+import { REGISTRATION_FAIL, LEAVE_USER_PAGE } from './../../constants/index';
 import * as constants from '../../constants';
 import axios from 'axios';
 import { ILoginForm } from '../../interfaces';
@@ -63,7 +63,8 @@ export default {
             type: constants.USER_TRY_TO_LOG_OUT,
         };
     },
-    fetchUser() {
+    fetchUser(userId: string) {
+        console.log(userId)
         return async (dispatch: any, getStore: any) => {
             const {user} = getStore();
             dispatch({
@@ -72,7 +73,7 @@ export default {
             try {
                 const response = await axios({
                     method: 'GET',
-                    url: `http://localhost:5000/api/info/${'96f0474a-be0e-4a90-b341-94b484be2d56'}`,
+                    url: `http://localhost:5000/api/info/${userId}`,
                     headers: {token: user.token},
                 });
                 dispatch({
@@ -87,7 +88,7 @@ export default {
             }
         };
     },
-    fetchNextPosts(postNumber: number) {
+    fetchNextPosts(postNumber: number, userId: string) {
         return async (dispatch: any, getStore: any) => {
             const store = getStore();
             // dispatch({
@@ -96,7 +97,7 @@ export default {
             try {
                 const response = await axios({
                     method: 'GET',
-                    url:`http://localhost:5000/api/info/${'96f0474a-be0e-4a90-b341-94b484be2d56'}/nextPosts`,
+                    url:`http://localhost:5000/api/info/${userId}/nextPosts`,
                     headers: {postNumber:postNumber}
                 });
                 
@@ -112,6 +113,12 @@ export default {
                 });
             }
         };
+    },
+
+    resetPostCounter() {
+        return {
+            type: LEAVE_USER_PAGE,
+        }
     },
 
 }

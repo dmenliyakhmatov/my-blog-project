@@ -15,6 +15,7 @@ interface IPostProps {
 class PostsAll extends React.Component<IPostProps,{} > {
   constructor(props:IPostProps){
     super(props);
+    this.handleLikeButton = this.handleLikeButton.bind(this);
   }
 
 componentDidMount() {
@@ -29,13 +30,16 @@ componentWillUnmount() {
   this.props.actions.resetPostCounter();
 }
 
+handleLikeButton(postId: string) {
+  this.props.actions.createLike(postId);
+}
+
   render() {
     return(
       <>
-      {console.log(this.props.postsList)}
         {
-          this.props.postsList?.map((post, i) => (
-            <PostItem {...post} key={`Post_${post._id}`} />)
+          this.props.postsList?.map((post) => (
+            <PostItem handleLikeButton={this.handleLikeButton} {...post} key={`Post_${post._id}`} />)
           )
         }
         <button type='button' onClick={this.showMore} >Жмяк</button>

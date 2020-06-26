@@ -3,6 +3,7 @@ import validators from './validators.js';
 import usersActions from './controllers/user.js'
 import postActions from './controllers/post.js'
 import commentAction from './controllers/comment.js';
+import likeAction from './controllers/post-likes.js'
 import fs from 'fs';
 import database from './database/connection.js';
 import mongoose from 'mongoose';
@@ -131,6 +132,16 @@ export default [{
     method: 'DELETE',
     path: '/{postId}/comments',
     handler: commentAction.deleteComment,
+    options: {
+      auth: {
+        strategy: 'user'
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/{postId}/like',
+    handler: likeAction.createLike,
     options: {
       auth: {
         strategy: 'user'

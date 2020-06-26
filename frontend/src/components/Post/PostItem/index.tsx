@@ -10,18 +10,25 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 
 const PostItem = (props: any) => {
-  const {title, shortDiscription, _id, coverUrl} = props;
-  console.log(props)
+  const {
+    _id,
+    title, 
+    shortDiscription,
+    coverUrl,
+    postAuthor,
+    handleLikeButton,
+    likesCount,
+    } = props;
+    console.log(props)
   return (
     <section className="post__wrapper">
       <div className="post-header">
         <Link to="#" className="category post-header__item"> 
           <div>Категория</div>
         </Link>
-        <Link to="#" className="author post-header__item"> 
-        <div>Автор</div>
+        <Link to={`/user/${postAuthor._id}`} className="author post-header__item"> 
+          {`${postAuthor.name} ${postAuthor.surname}`}
         </Link>
-        <div className="post_data post-header__item">Дата публикации</div>
       </div>
       <h2 className="post__title">{title}</h2>
       <div className="post__short">
@@ -41,7 +48,8 @@ const PostItem = (props: any) => {
           </button>
         </div>
        <div className="post-footer_right">
-        <button className="btn btn__like">
+        <button className="btn btn__like" onClick={()=> handleLikeButton(_id)}>
+          { likesCount}
           <FavoriteBorderIcon />
         </button>
        </div>

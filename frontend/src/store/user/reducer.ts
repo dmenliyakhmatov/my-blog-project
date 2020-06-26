@@ -1,4 +1,4 @@
-import { REGISTRATION_SUCCESS } from './../../constants/index';
+import { REGISTRATION_SUCCESS, LEAVE_POSTS_PAGE } from './../../constants/index';
 import { GET_USERS_SUCCESS, GET_USERS_LOADING, GET_USERS_FAIL, USER_TRY_TO_LOG_OUT, GET_USER_POST_SUCCESS, LOGIN_WAITING, LOGIN_SUCCESS, SET_MODAL_STATE, USER_TRY_TO_REGISTRATE } from '../../constants';
 
 interface IUserState {
@@ -103,7 +103,11 @@ export default function userReducer(state = initialState, action:any) {
                 errMsg: action.payload,
                 isUsersLoading: false,
             };
-
+        case LEAVE_POSTS_PAGE:
+            return {
+                ...state,
+                postNumber: 4,
+            }
         default:
             return state;
     }

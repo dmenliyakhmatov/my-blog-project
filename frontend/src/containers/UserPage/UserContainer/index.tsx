@@ -15,13 +15,20 @@ interface UserProps {
   actions: any;
   isCurrentUserPage: boolean;
   userData:{
-    userId: string;
+    _id: string;
+    name: string;
+    surname: string;
   };
   userPosts: [{
     _id:string
   }]
   isUsersLoading: boolean;
   postNumber: number;
+  match: {
+    params: {
+      userId: string
+    }
+  };
 }
 
 class UsersContainer extends React.Component<UserProps, UserState> {
@@ -29,24 +36,25 @@ class UsersContainer extends React.Component<UserProps, UserState> {
     super(props);
   }
   componentDidMount() {
-    this.props.actions.fetchUser();
+    this.props.actions.fetchUser(this.props.match.params.userId);
   }
 
   showMore = () => {
-    console.log(this.props.postNumber)
-    const postNumber = this.props.postNumber
-    this.props.actions.fetchNextPosts(postNumber);
+    this.props.actions.fetchNextPosts(this.props.postNumber, this.props.match.params.userId);
   }
 
 
 
   render() {
+    const {userData, isCurrentUserPage} = this.props;
+    console.log('!!!', userData)
     return (<>
      {this.props.isUsersLoading && <span>Загрузка...</span>}
       {this.props.userData && <div>
-        <UserCard userData={this.props.userData} isCurrentUserPage={this.props.isCurrentUserPage}  />
+        <UserCard userData={userData} isCurrentUserPage={isCurrentUserPage}  />
         {this.props.userPosts && this.props.userPosts.map((post, index) => (
-          <PostItem {...post} key={`PostItem_${post._id}`} />
+          <PostItem 
+          {...post} key={`PostItem_${post._id}`} />
         ))}
         <button type='button' onClick={this.showMore}> Показать еще</button>
       </div>

@@ -8,7 +8,7 @@ export default {
       const authUser = request.auth.credentials;
       const profileId = request.params.userId;
       
-      if(authUser.userId === profileId) {
+      if(authUser._id === profileId) {
         const changeData = request.payload;
         await database.user.findOneAndUpdate({userId:profileId}, changeData, { 
           new: true
@@ -31,7 +31,7 @@ export default {
       const authUser = request.auth.credentials;
       const profileId = request.params.userId;
       
-      if(authUser.userId === profileId) {
+      if(authUser._id === profileId) {
         await database.user.deleteOne({userId:profileId})
       } else {
         return Boom.forbidden('Отсутвует разрешение на данное действие')
@@ -59,16 +59,19 @@ export default {
       const token = request.headers.token;
       let isCurrentUserPage = false;
       const user = await database.user
-        .findOne({userId: paramsUserId})
+        .findOne({_id: paramsUserId})
         .populate({
           path: 'posts',
           options: { sort: { 'createdAt': -1 } },
           limit: 4,
-
+          populate: {
+            path: 'postAuthor',
+            select: [ '_id', 'name', 'surname'],
+          }
         });
         const authUser = await database.user.findOne({ token });
         if(authUser) {
-          isCurrentUserPage = authUser.userId === paramsUserId;
+          isCurrentUserPage = authUser._id === paramsUserId;
         }
 
       if(user) {
@@ -90,21 +93,24 @@ export default {
       const postNumber = +request.headers.postnumber;
       const queryUserId = request.params.userId;
       const user = await database.user
-        .findOne({userId: queryUserId})
-        .populate({
-          path: 'posts',
-          options: { 
-            limit: 4, 
-            skip: postNumber, 
-            sort: { 'createdAt': -1 } 
-          }
-        });
+                .findOne({_id: queryUserId})
+                .populate({
+                  path: 'posts',
+                  options: { 
+                    limit: 4, 
+                    skip: postNumber, 
+                    sort: { 'createdAt': -1 } 
+                  },
+                  populate: {
+                    path: 'postAuthor',
+                    select: [ '_id', 'name', 'surname'],
+                  }
+                });
         
     if(user) {
       const userInfo = {
         posts: user.posts
       }
-      console.log(userInfo); 
       return userInfo;
     } else {
       return null

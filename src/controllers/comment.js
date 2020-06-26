@@ -47,10 +47,9 @@ export default {
   deleteComment: async (request, h) => {
     const {commentId, userId} = request.payload;
     const post = await database.post.findOne({_id:request.params.postId});
-    const authUserId = request.auth.credentials.userId;
+    const authUserId = request.auth.credentials._id;
 
-    const commentIndex = post.comments.
-      findIndex((comment) => comment.toString() === commentId.toString())
+    const commentIndex = post.comments.findIndex((comment) => comment.toString() === commentId.toString())
     if (authUserId === userId){
       
       if(commentIndex < 0) {

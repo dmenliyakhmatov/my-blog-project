@@ -3,11 +3,13 @@
   background-color: #ffffff;
   margin-top: 15px;
   padding: 0  20px;
+  min-width: 600px;
 }
 
 .btn {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .post__wrapper:hover {

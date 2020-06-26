@@ -21,8 +21,8 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'comment',
     }],
-    userId: {
-      type: mongoose.Schema.Types.String,
+    postAuthor: {
+      type: mongoose.Schema.Types.ObjectId,
       required:true,
       ref: 'user'
     },

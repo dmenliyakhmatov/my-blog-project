@@ -13,14 +13,13 @@ export default {
         title: title,
         textContent: textContent,
         shortDiscription,
-        userId: authorOfPost.userId,
+        userId: authorOfPost._id,
       });
 
       newPost.save(function (err) {
         if (err) throw err;
       })
-      console.log('!!!!')
-      await database.user.updateOne({userId:authorOfPost.userId}, {$push: {posts: newPost._id}})
+      await database.user.updateOne({userId:authorOfPost._id}, {$push: {posts: newPost._id}})
 
       return newPost._id
     } catch(e) {
@@ -34,7 +33,10 @@ export default {
       const postId = request.params.postId;
       const post = await database.post
           .findById(postId)
-          .populate
+          .populate({
+            path: 'postAuthor',
+            select: [ '_id', 'name', 'surname'],
+          })
           .populate({
             path: 'comments',
             populate: {
@@ -56,6 +58,7 @@ export default {
         shortDiscription: post.shortDiscription,
         textContent: post.textContent,
         comments: post.comments,
+        postAuthor: post.postAuthor,
         likesCount: post.likesCount,
         pageViews: post.pageViews,
         coverUrl: post.coverUrl,
@@ -79,7 +82,7 @@ export default {
       return Boom.notFound('Страница не найдена')
     }
 
-    const authUser = request.auth.credentials.userId;
+    const authUser = request.auth.credentials._id;
 
     if (authUser === postData.userId) {
       return postData;
@@ -96,7 +99,7 @@ export default {
       return Boom.notFound('Страница не найдена')
     }
 
-    const authUser = request.auth.credentials.userId;
+    const authUser = request.auth.credentials._id;
     const changeData = request.payload;
 
 
@@ -116,14 +119,22 @@ export default {
       const postList = await database.post
         .find({},
           {
+            _id: true,
             title: true, 
             textContent:true, 
             shortDiscription: true, 
-            coverUrl:true}, 
+            coverUrl:true,
+            postAuthor:true,
+            createdAt:true,
+            likesCount:true,
+          }, 
             {sort: { 'createdAt': -1 }
           })
-        .limit(4);
-      
+        .limit(4)
+        .populate({
+          path: 'postAuthor',
+          select: ['_id', 'name', 'surname'],
+        });
       return postList;
         
     } catch(e) {
@@ -134,9 +145,11 @@ export default {
   getNextPosts: async (request, h) => {
     try {
       const postNumber = +request.headers.postnumber;
+      console.log(postNumber)
       const postList = await database.post
         .find({},
           {
+            _id: true,
             title: true,
             textContent:true,
             shortDiscription: true, 
@@ -144,8 +157,13 @@ export default {
           },
           {sort: { 'createdAt': -1 }
         })
+        .skip(postNumber)
         .limit(4)
-        .skip(postNumber);
+        .populate({
+          path: 'postAuthor',
+          select: ['_id', 'name', 'surname'],
+        });
+        
         
       return postList;
         

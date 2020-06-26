@@ -14,7 +14,11 @@ const PostPage = (props: any) => {
     coverUrl,
     textContent, 
     category, 
-    userId,
+    postAuthor:{
+      _id,
+      name,
+      surname
+    },
     likesCount,
     pageViews,
     createdData,
@@ -25,10 +29,10 @@ const PostPage = (props: any) => {
       <section className="post__header-wrapper">
           <ul className="post__header-information_row">
             <li className="post__header__info-item">
-              <Link to={`user/${userId}`} className='category-link'>Категория </Link>
+              <Link to={`user/${''}`} className='category-link'>Категория </Link>
             </li>
             <li className="post__header__info-item">
-              <Link to={`user/${userId}`} className='author-link'>Автор </Link>
+              <Link to={`user/${_id}`} className='author-link'>{`${name} ${surname}`} </Link>
             </li>
             <li className="post__header__info-item">
               <span className="create-data">{createdData}</span> 
