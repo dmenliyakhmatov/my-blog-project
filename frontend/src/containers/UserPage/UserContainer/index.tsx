@@ -6,10 +6,6 @@ import PostItem from '../../../components/Post/PostItem'
 import actions from '../../../store/user/actions';
 // 'HelloWorldProps' describes our props structure.
 // For the state, we use the '{}' type.
-interface UserState {
-  isLoggedIn: boolean;
-  userData: {}
-}
 
 interface UserProps {
   actions: any;
@@ -18,6 +14,9 @@ interface UserProps {
     _id: string;
     name: string;
     surname: string;
+    about: string;
+    birthDate: string;
+    avatarUrl: string;
   };
   userPosts: [{
     _id:string
@@ -31,10 +30,11 @@ interface UserProps {
   };
 }
 
-class UsersContainer extends React.Component<UserProps, UserState> {
+class UsersContainer extends React.Component<UserProps, {}> {
   constructor(props:UserProps) {
     super(props);
   }
+
   componentDidMount() {
     this.props.actions.fetchUser(this.props.match.params.userId);
   }
@@ -46,13 +46,13 @@ class UsersContainer extends React.Component<UserProps, UserState> {
 
 
   render() {
-    const {userData, isCurrentUserPage} = this.props;
+    const {userData, userPosts, isCurrentUserPage} = this.props;
     console.log('!!!', userData)
     return (<>
      {this.props.isUsersLoading && <span>Загрузка...</span>}
-      {this.props.userData && <div>
+      {userData && <div>
         <UserCard userData={userData} isCurrentUserPage={isCurrentUserPage}  />
-        {this.props.userPosts && this.props.userPosts.map((post, index) => (
+        {userPosts && userPosts.map((post, index) => (
           <PostItem 
           {...post} key={`PostItem_${post._id}`} />
         ))}

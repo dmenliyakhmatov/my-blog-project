@@ -1,3 +1,4 @@
+import { API_PATH } from './../../constants/apiPath';
 import { change } from 'redux-form';
 import axios from 'axios';
 import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS, CREATE_LIKE } from '../../constants';
@@ -12,7 +13,7 @@ export default {
       try {
       const response = await axios({
         method: 'GET',
-        url: 'http://localhost:5000/api/posts/all',
+        url: `${API_PATH}/posts/all`,
       });
       dispatch({
         type: GET_POSTS_SUCCESS,
@@ -33,7 +34,7 @@ export default {
         type: GET_POSTS_LOADING,
       });
       try {
-      const response = await axios.get(`http://localhost:5000/api/posts/categories/${category}`);
+      const response = await axios.get(`${API_PATH}/posts/categories/${category}`);
       dispatch({
         type: GET_POSTS_SUCCESS,
         payload: response.data
@@ -53,11 +54,10 @@ export default {
       dispatch({
         type:GET_POSTS_LOADING
       });
-      console.log('!!!!!!!!', localStorage)
       try {
         const response = await axios({
           method: 'GET',
-          url: `http://localhost:5000/api/posts/${postId}`,
+          url: `${API_PATH}/posts/${postId}`,
           headers: {Authorization: `Bearer ${user.token}` }
         
         })
@@ -81,7 +81,7 @@ export default {
       try {
       const response = await axios({
         method: 'GET',
-        url: 'http://localhost:5000/api/postAll/next',
+        url: `${API_PATH}/postAll/next`,
         headers:{postNumber},
       });
       dispatch({
@@ -105,7 +105,7 @@ export default {
       try {
       const response = await axios({
         method: 'GET',
-        url: `http://localhost:5000/api/posts/categories/${category}/next`,
+        url: `${API_PATH}/posts/categories/${category}/next`,
         headers:{postNumber},
       });
       dispatch({
@@ -135,18 +135,18 @@ export default {
         console.log(formData)
       const response = await axios({
         method: 'POST',
-        url: 'http://localhost:5000/api/writing',
+        url: `${API_PATH}/writing`,
         data: formData,
         headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
       });
-
+        console.log(img)
       if(img) {
         const imgData = new FormData();
         imgData.append('file', img);
-        imgData.append('postId', '5ef27b10b5a641522819ac4c')
+        imgData.append('postId', response.data)
         const imgResponse = await axios({
           method: 'POST',
-          url: 'http://localhost:5000/upload',
+          url: `${API_PATH}/upload`,
           data: imgData,
           headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
         })
@@ -168,7 +168,7 @@ export default {
         console.log('action', postId)
       const response = await axios({
         method: 'PUT',
-        url: `http://localhost:5000/api/${postId}/edit`,
+        url: `${API_PATH}${postId}/edit`,
         data: formData,
         headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
       });
@@ -194,12 +194,13 @@ export default {
   },
 
   createLike(postId: string) {
-    return async (dispatch: any) => {
+    return async (dispatch: any, getStore: any) => {
+      const {user} = getStore();
       try {
         const response = await axios({
           method: 'GET',
-          url: `http://localhost:5000/api/${postId}/like`,
-          headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+          url: `${API_PATH}/${postId}/like`,
+          headers: {Authorization: `Bearer ${user.token}` }
         })
 
         dispatch({

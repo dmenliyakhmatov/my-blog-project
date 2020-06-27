@@ -1,3 +1,4 @@
+import { API_PATH } from './../../constants/apiPath';
 import { REGISTRATION_FAIL, LEAVE_USER_PAGE, GET_DATA_FROM_STORAGE } from './../../constants/index';
 import * as constants from '../../constants';
 import axios from 'axios';
@@ -19,7 +20,7 @@ export default {
             try {
                 const response = await axios ({
                     method: 'POST',
-                    url: `http://localhost:5000/api/login`,
+                    url: `${API_PATH}/login`,
                     data: formData,
                 });
                 console.log(response.data)
@@ -43,14 +44,14 @@ export default {
             try {
                 const response = await axios ({
                     method: 'POST',
-                    url: `http://localhost:5000/api/register`,
+                    url: `${API_PATH}/register`,
                     data: formData,
                 });
                 dispatch({
                     type: constants.REGISTRATION_SUCCESS,
                     payload: response.data,
                 })
-            } catch (e) {console.log('!!!!!')
+            } catch (e) {console.log(e)
                 dispatch({
                     type: constants.REGISTRATION_FAIL,
                     payload: e.message,
@@ -73,7 +74,7 @@ export default {
             try {
                 const response = await axios({
                     method: 'GET',
-                    url: `http://localhost:5000/api/info/${userId}`,
+                    url: `${API_PATH}/info/${userId}`,
                     headers: {token: user.token},
                 });
                 dispatch({
@@ -97,7 +98,7 @@ export default {
             try {
                 const response = await axios({
                     method: 'GET',
-                    url:`http://localhost:5000/api/info/${userId}/nextPosts`,
+                    url:`${API_PATH}/info/${userId}/nextPosts`,
                     headers: {postNumber:postNumber}
                 });
                 
@@ -125,5 +126,50 @@ export default {
             type: LEAVE_USER_PAGE,
         }
     },
+    getEditData(userId: string) {
+        return async (dispatch: any, getStore: any) => {
+            const { user } = getStore();
+            try {
+                const response = await axios({
+                    method: 'GET',
+                    url:`${API_PATH}/user/${userId}/edit`,
+                    headers: {Authorization: `Bearer ${user.token}` }
+                });
+                
+                dispatch({
+                    type: constants.GET_EDIT_USERDATA,
+                    payload: response.data
+                })
+            } catch (e) {
+                dispatch({
+                    type: constants.GET_USERS_FAIL,
+                    payload: e.message,
+                });
+            }
+        }
+    },
 
+    sendEditData( formData: any, userId: string ) {
+        return async (dispatch: any, getStore: any) => {
+            const { user } = getStore();
+            try {
+                const response = await axios({
+                    method: 'PUT',
+                    url:`${API_PATH}/user/${userId}/edit`,
+                    data: formData,
+                    headers: {Authorization: `Bearer ${user.token}` }
+                });
+                
+                dispatch({
+                    type: constants.SEND_EDIT_USERDATA_SUCCESS,
+                    payload: response.data
+                })
+            } catch (e) {
+                dispatch({
+                    type: constants.GET_USERS_FAIL,
+                    payload: e.message,
+                });
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@ import defaultAvatar from '../../../assets/img/defaultAvatar.png'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import { API_PATH } from '../../../constants/apiPath';
 export interface UserData{
   name:string;
   surname?:string;
@@ -56,7 +57,7 @@ export default function Header(props:HeaderProps) {
             <Link to={`/user/${currentUser?.currentId}`} className={"header__user-menu_link"} >
               <span className="user-menu_text" >{ currentUser?.currentName } </span>
               <span className="user-menu_text" >{ currentUser?.currentSurname} </span>
-              <img src={ currentUser?.avatarUrl || defaultAvatar} width="30" alt="Avatar"/>
+              <img src={`${API_PATH}${currentUser?.avatarUrl}`} alt="Avatar" className="header__avatar" />
             </Link>
             <button className={`logout-menu_arrow ${logoutMenu ? 'isActive' : ''}`} onClick={onLogoutArrowClick}>
                 <ArrowDropDownOutlinedIcon />

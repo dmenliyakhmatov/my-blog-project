@@ -21,6 +21,7 @@ export default {
           email: userData.email,
           password: passwordHash,
           birthDate: userData.birthDate,
+          avatarUrl: '/avatar/defaultAvatar.png',
           token: uuid.v4(),
         });
         await newUser.save(function (err) {
@@ -30,6 +31,7 @@ export default {
           userId: newUser._id,
           name: newUser.name,
           surname: newUser.surname,
+          avatarUrl: newUser.avatarUrl,
           token: newUser.token,
         };
       } else {
@@ -46,12 +48,14 @@ export default {
         const { email, password } = request.payload;
         const passwordHash = generateHash(password);
         const foundUser = await database.user.findOne({email:email, password: passwordHash});
-
+        
+        console.log(foundUser)
         if(foundUser) {
             return {
               userId: foundUser._id,
               name: foundUser.name,
               surname: foundUser.surname,
+              avatarUrl: foundUser.avatarUrl,
               token: foundUser.token,
             };
           } else {

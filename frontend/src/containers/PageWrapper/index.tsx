@@ -33,8 +33,10 @@ class PageWrapper extends React.Component<any,IPageWrapperState> {
   componentDidMount() {
     if(!this.props.isLoggedIn && localStorage.length!== 0) {
       const currentUser = {
+        currentId: localStorage.getItem('currentId'),
         currentName: localStorage.getItem('currentName'),
         currentSurname: localStorage.getItem('currentSurname'),
+        avatarUrl: localStorage.getItem('avatarUrl')
       };
       const token = localStorage.getItem('token');
 

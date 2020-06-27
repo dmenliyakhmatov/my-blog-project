@@ -10,7 +10,7 @@ export default {
      surname: Joi.string().required(),
      email: Joi.string().email().required(),
      password: Joi.string(),
-     birthDate: Joi.date().format("DD-MM-YYYY").required(),
+     birthDate: Joi.date().format("DD.MM.YYYY").required(),
    })
  },
   loginData:{
@@ -28,7 +28,9 @@ export default {
     payload: Joi.object({
      name: Joi.string().optional(),
      surname: Joi.string().optional(),
-     birthDate: Joi.date().format("DD/MM/YYYY").optional(),
+     email: Joi.string().email().optional(),
+     birthDate: Joi.date().format("DD.MM.YYYY").optional(),
+     about: Joi.string().optional(),
    })
  },
  postData: {

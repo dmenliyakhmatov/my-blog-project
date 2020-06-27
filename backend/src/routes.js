@@ -42,8 +42,18 @@ export default [{
     }
   },
   {
+    method: 'GET',
+    path: '/api/user/{userId}/edit',
+    handler: usersActions.getEditInfo,
+    options: {
+      auth: {
+        strategy: 'user'
+      },
+    }
+  },
+  {
     method: 'PUT',
-    path: '/user/{userId}/edit',
+    path: '/api/user/{userId}/edit',
     handler: usersActions.changeProfile,
     options: {
       auth: {
@@ -160,7 +170,7 @@ export default [{
   },
   {
     method: 'GET',
-    path: '/cover/{file*}',
+    path: '/api/cover/{file*}',
     handler: {
       directory: {
         path: './src/public/img/covers',
@@ -171,7 +181,7 @@ export default [{
   },
   {
     method: 'GET',
-    path: '/avatar/{file*}',
+    path: '/api/avatar/{file*}',
     handler: {
       directory: {
         path: './src/public/img/avatars/',
@@ -182,7 +192,7 @@ export default [{
   },
 {
   method:'POST',
-  path:'/upload',
+  path:'/api/upload',
   handler: async (req, h) => {
     const { payload } = req;
     try {
@@ -190,18 +200,17 @@ export default [{
         return new Promise((resolve, reject) => {
           const filename = file.hapi.filename
           const data = file._data
-          console.log(data)
-          fs.writeFile('./src/public/img/' + filename, data, err => {
+          fs.writeFile('./src/public/img/covers/' + filename, data, err => {
             if (err) {
               console.log(err)
               reject(err)
             }
-            resolve(filename)
+            resolve(`/cover/${filename}`)
           })
         })
       }
-      
       const response = await handleFileUpload(payload.file)
+      console.log(payload.postId)
       await database.post.findByIdAndUpdate(payload.postId, {coverUrl: response}, function(err, user){
         if(err) return console.log(err);
       })

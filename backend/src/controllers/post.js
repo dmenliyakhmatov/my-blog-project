@@ -13,14 +13,14 @@ export default {
         title: title,
         textContent: textContent,
         shortDiscription,
-        userId: authorOfPost._id,
+        postAuthor: authorOfPost._id,
       });
 
       newPost.save(function (err) {
         if (err) throw err;
       })
       await database.user.updateOne({userId:authorOfPost._id}, {$push: {posts: newPost._id}})
-
+      console.log(newPost._id)
       return newPost._id
     } catch(e) {
       console.log(e)
@@ -44,12 +44,14 @@ export default {
               select: ['name', 'surname', 'userId', 'avatartUrl']
             }
           });
-      
+
       if(!post) {
         return Boom.notFound('Страница не найдена')
       }
       await database.post.
           updateOne({_id: postId}, {$inc:{pageViews: 1}});
+
+
 
       const createdData = `${post.createdAt.getDate()}-${post.createdAt.getMonth()+1}-${post.createdAt.getFullYear()}`;
       const postData = {
@@ -62,7 +64,7 @@ export default {
         likesCount: post.likesCount,
         pageViews: post.pageViews,
         coverUrl: post.coverUrl,
-        createdData
+        createdData,
       }
       
 

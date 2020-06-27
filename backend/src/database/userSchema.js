@@ -15,6 +15,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required:true,
     },
+    about: {
+      type: mongoose.Schema.Types.String,
+      required:true,
+    },
     birthDate: {
       type: mongoose.Schema.Types.Date,
       required: true,
@@ -27,9 +31,9 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required:true,
     },
-    userId: {
+    avatarUrl: {
       type: mongoose.Schema.Types.String,
-      default: uuid.v4,
+      default: '/avatar/defaultAvatar.png'
     },
     token: {
       type: mongoose.Schema.Types.String,

@@ -22,3 +22,9 @@
 .content_row {
   margin-top: 15px;
 }
+
+.user-card__avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 3px;
+}

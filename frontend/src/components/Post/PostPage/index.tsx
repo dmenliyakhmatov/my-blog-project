@@ -6,6 +6,7 @@ import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { API_PATH } from '../../../constants/apiPath';
 
 const PostPage = (props: any) => {
   console.log('PostPage',props)
@@ -20,7 +21,10 @@ const PostPage = (props: any) => {
     likesCount,
     pageViews,
     createdData,
+    userId
 } = props;
+
+  const isOwner = postAuthor._id === userId;
 
   return (
     <article className='layout-center' >
@@ -39,6 +43,7 @@ const PostPage = (props: any) => {
               <VisibilityOutlinedIcon className="views" fontSize="small" />
               <span className="views-value"> {pageViews} </span> 
             </li>
+            {isOwner &&
             <li className="post__header__info-item">
               <Link to={{
                     pathname:`/writing/${_id}/edit`,
@@ -47,6 +52,7 @@ const PostPage = (props: any) => {
                 <EditOutlinedIcon />
               </Link>
             </li>
+            }
           </ul>
         <div className="post_title-container">
           <h1 className="post_title">
@@ -56,7 +62,7 @@ const PostPage = (props: any) => {
         <div className="post__short">
       <p className="short-decription"> {shortDiscription}</p>
         {
-          coverUrl && <img src={`http://localhost:5000/cover/${coverUrl}`} width='600' height='400' alt="post picture"/>
+          coverUrl && <img src={`${API_PATH}${coverUrl}`} width='600' height='400' alt="post picture"/>
         }
       </div>
       </section>

@@ -18,6 +18,9 @@ interface IPostProps {
     }
   };
   postData: {};
+  currentUser:{
+    currentId:string;
+  }
 }
 class PostPageContainer extends React.Component<IPostProps,{}> {
   constructor(props:IPostProps){
@@ -29,13 +32,13 @@ class PostPageContainer extends React.Component<IPostProps,{}> {
   }
 
   render() {
-    
+    const userId = this.props.currentUser.currentId;
     return(
       <>
       {console.log('!!!', this.props.postData)}
       {this.props.isPostLoading && <span>Загрузка...</span>}
       { this.props.postData && <div>
-        <PostPage {...this.props.postData} />
+        <PostPage {...this.props.postData} userId={userId} />
         <CommentBlock  {...this.props.postData} />
         <CommentFormContainer postId={this.props.match.params.postId} />
         </div>
@@ -45,7 +48,7 @@ class PostPageContainer extends React.Component<IPostProps,{}> {
   }
 }
 
-const mapStateToProps = (state: any) => ({ ...state.post });
+const mapStateToProps = (state: any) => ({ ...state.post, ...state.user });
 
 const mapDispatchToProps = (dispatch: any) => ({
   actions: bindActionCreators(actions, dispatch),

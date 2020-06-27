@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './postItemStyle.css'
-import PostPageContainer from '../../../containers/Posts/PostPageContainer';
-import IconButton from '@material-ui/core/IconButton';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-
+import { API_PATH } from '../../../constants/apiPath';
 
 const PostItem = (props: any) => {
   const {
@@ -34,7 +31,7 @@ const PostItem = (props: any) => {
       <div className="post__short">
       <Link to={`/post/${_id}`} > <p className="short-decription"> {shortDiscription}</p> </Link>
         {
-          coverUrl && <img src='http://localhost:5000/cover/1036242.png ' width='600' height='400' alt="post picture"/>
+          coverUrl && <img src={`${API_PATH}${coverUrl}`} width='600' height='400' alt="post picture"/>
         }
       </div>
      

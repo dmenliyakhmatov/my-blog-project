@@ -3,15 +3,44 @@ import Boom from 'boom';
 import comment from './comment.js';
 
 export default {
+  getEditInfo: async (request, h) => {
+    try {
+      const paramsUserId = request.params.userId;
+      const authUser = request.auth.credentials;
+      const isOwner = String(authUser._id) === String(paramsUserId);
+
+      if(isOwner) {
+        const user = await database.user.findById( paramsUserId) ;
+        
+        const birthDate = `${user.birthDate.getDate()}.${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
+
+        const userInfo = {
+          name: user.name,
+          surname: user.surname,
+          email: user.email,
+          birthDate: birthDate,
+          about: user.about,
+        }
+          return userInfo;
+      } else {
+        return Boom.forbidden('Отсутвует разрешение на данное действие')
+      }
+      } catch(e) {
+        console.log(e);
+        return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
+    }
+  },
+
   changeProfile: async (request, h) => {
     try {
       const authUser = request.auth.credentials;
       const profileId = request.params.userId;
       
-      if(authUser._id === profileId) {
+      
+      if(String(authUser._id) === String(profileId)) {
         const changeData = request.payload;
-        await database.user.findOneAndUpdate({userId:profileId}, changeData, { 
-          new: true
+        console.log(changeData)
+        await database.user.findByIdAndUpdate(profileId, changeData, { 
         }, function(err, user){
           if(err) return console.log(err);
         })
@@ -71,14 +100,17 @@ export default {
         });
         const authUser = await database.user.findOne({ token });
         if(authUser) {
-          isCurrentUserPage = authUser._id === paramsUserId;
+          isCurrentUserPage = String(authUser._id) === String(paramsUserId);
         }
-
+        const birthDate = `${user.birthDate.getDate()}.${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
       if(user) {
         const userInfo = {
+        _id: user._id,
         name: user.name,
         surname: user.surname,
-        birthDate: user.birthDate,
+        birthDate: birthDate,
+        about: user.about,
+        avatarUrl: user.avatarUrl,
         };
         return { userInfo,  userPosts: user.posts, isCurrentUserPage};
       } else {
