@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: space-around;
   padding: 20px;
+  width: 640px;
   background-color: #ffffff;
 }
 
@@ -27,4 +28,14 @@
   width: 55px;
   height: 55px;
   border-radius: 3px;
+}
+
+.hidden_input {
+  visibility: hidden;
+  display: none;
+}
+
+.user-card__avatar:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.253);
 }

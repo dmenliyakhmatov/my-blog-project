@@ -6,7 +6,6 @@ import ImageIcon from '@material-ui/icons/Image';
 const InptFile = ({input, meta, ...props}: any) => {
 
   const handleClick = () => {
-    console.log('sada',props.fileRef.current)
     props.fileRef.current.click()
   }
 

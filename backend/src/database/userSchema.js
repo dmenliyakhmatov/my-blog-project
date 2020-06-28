@@ -17,7 +17,6 @@ const schema = new mongoose.Schema(
     },
     about: {
       type: mongoose.Schema.Types.String,
-      required:true,
     },
     birthDate: {
       type: mongoose.Schema.Types.Date,

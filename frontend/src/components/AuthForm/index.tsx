@@ -8,11 +8,12 @@ interface IAuthFormProps {
   activeTab: string;
   loginSubmit: any;
   registrationSubmit: any;
+  errMsg: string|null;
   handleClick: (arg0: string) => void
 }
 
 const AuthForm = (props: IAuthFormProps) => {
-  const { handleClick, activeTab, loginSubmit, registrationSubmit } = props;
+  const { handleClick, activeTab, loginSubmit, registrationSubmit, errMsg } = props;
 
   console.log(props)
   return (<>
@@ -29,7 +30,7 @@ const AuthForm = (props: IAuthFormProps) => {
       <LogInForm onSubmit={loginSubmit} /> )
     }
       </div>
-
+    <span>{errMsg}</span>
     </section>
     </>
   )

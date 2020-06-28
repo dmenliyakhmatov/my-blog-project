@@ -12,7 +12,7 @@ export default {
       if(isOwner) {
         const user = await database.user.findById( paramsUserId) ;
         
-        const birthDate = `${user.birthDate.getDate()}.${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
+        const birthDate = `${user.birthDate.getDate()}.0${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
 
         const userInfo = {
           name: user.name,
@@ -21,7 +21,7 @@ export default {
           birthDate: birthDate,
           about: user.about,
         }
-          return userInfo;
+          return {...userInfo};
       } else {
         return Boom.forbidden('Отсутвует разрешение на данное действие')
       }
@@ -35,10 +35,10 @@ export default {
     try {
       const authUser = request.auth.credentials;
       const profileId = request.params.userId;
-      
+      const changeData = request.payload;
       
       if(String(authUser._id) === String(profileId)) {
-        const changeData = request.payload;
+        
         console.log(changeData)
         await database.user.findByIdAndUpdate(profileId, changeData, { 
         }, function(err, user){
@@ -48,7 +48,9 @@ export default {
         return Boom.forbidden('Отсутвует разрешение на данное действие')
       }
       
-      return 'ok'
+      const birthDate = `${changeData.birthDate.getDate()}.0${changeData.birthDate.getMonth()+1}.${changeData.birthDate.getFullYear()}`;
+
+      return {...changeData, birthDate};
     } catch (err) {
       console.log(err)
       return Boom.badImplementation('Произошла ошибка, попробуйте позднее');
@@ -60,8 +62,8 @@ export default {
       const authUser = request.auth.credentials;
       const profileId = request.params.userId;
       
-      if(authUser._id === profileId) {
-        await database.user.deleteOne({userId:profileId})
+      if(String(authUser._id) === String(profileId)) {
+        await database.user.deleteOne({_id:profileId})
       } else {
         return Boom.forbidden('Отсутвует разрешение на данное действие')
       }
@@ -102,7 +104,7 @@ export default {
         if(authUser) {
           isCurrentUserPage = String(authUser._id) === String(paramsUserId);
         }
-        const birthDate = `${user.birthDate.getDate()}.${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
+        const birthDate = `${user.birthDate.getDate()}.0${user.birthDate.getMonth()+1}.${user.birthDate.getFullYear()}`;
       if(user) {
         const userInfo = {
         _id: user._id,

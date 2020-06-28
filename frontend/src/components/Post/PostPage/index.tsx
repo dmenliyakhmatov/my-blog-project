@@ -21,7 +21,8 @@ const PostPage = (props: any) => {
     likesCount,
     pageViews,
     createdData,
-    userId
+    userId, 
+    handleLikeButton
 } = props;
 
   const isOwner = postAuthor._id === userId;
@@ -71,12 +72,9 @@ const PostPage = (props: any) => {
           <ModeCommentOutlinedIcon />
           Комментарии
         </Link>
-        <button className='btn_favorite'>
-          <BookmarkBorderOutlinedIcon />
-        </button>
-        <button className="btn btn__like">
-          {likesCount && likesCount}
-          <FavoriteBorderIcon />
+        <button className="btn btn__like" onClick={handleLikeButton} >
+          <span> {likesCount} </span> 
+          <FavoriteBorderIcon className="icon" />
         </button>
       </div>
       <section className='post__content'>

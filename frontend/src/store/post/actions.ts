@@ -1,7 +1,8 @@
+import { CREATE_COMMENT, CREATE_COMMENTS_FAIL } from './../../constants/index';
 import { API_PATH } from './../../constants/apiPath';
 import { change } from 'redux-form';
 import axios from 'axios';
-import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS, CREATE_LIKE } from '../../constants';
+import { GET_POSTS_LOADING, GET_POSTS_SUCCESS, GET_POSTS_FAIL, GET_ONE_POST_SUCCESS, LEAVE_POSTS_PAGE, GET_NEXT_POST_SUCCESS, CREATE_LIKE, CREATE_LIKE_ON_POST_PAGE, POST_DELETE_SUCCESS, RESET_DELETE_INDICATOR, CREATE_POST_SUCCESS } from '../../constants';
 
 export default {
   fetchAllPosts() {
@@ -128,9 +129,6 @@ export default {
 },
   publishPost(formData:{}, img?:File) {
     return async (dispatch:any, getStore:any) => {
-      dispatch({
-        type: GET_POSTS_LOADING,
-      });
       try {
         console.log(formData)
       const response = await axios({
@@ -139,7 +137,6 @@ export default {
         data: formData,
         headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
       });
-        console.log(img)
       if(img) {
         const imgData = new FormData();
         imgData.append('file', img);
@@ -149,6 +146,11 @@ export default {
           url: `${API_PATH}/upload`,
           data: imgData,
           headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+        })
+
+        dispatch({
+          type: CREATE_POST_SUCCESS,
+          payload: response.data,
         })
       } } catch (e) {
         dispatch({
@@ -165,25 +167,25 @@ export default {
         type: GET_POSTS_LOADING,
       });
       try {
-        console.log('action', postId)
+        console.log('action', formData)
       const response = await axios({
         method: 'PUT',
         url: `${API_PATH}${postId}/edit`,
         data: formData,
         headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
       });
-
-      // if(img) {
-      //   const imgData = new FormData();
-      //   imgData.append('file', img);
-      //   imgData.append('postId', '5ef27b10b5a641522819ac4c')
-      //   const imgResponse = await axios({
-      //     method: 'POST',
-      //     url: 'http://localhost:5000/upload',
-      //     data: imgData,
-      //     headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
-      //   })
-      // } 
+      
+      if(img) {
+        const imgData = new FormData();
+        imgData.append('file', img);
+        imgData.append('postId', '5ef27b10b5a641522819ac4c')
+        const imgResponse = await axios({
+          method: 'POST',
+          url: 'http://localhost:5000/upload',
+          data: imgData,
+          headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+        })
+      } 
     } catch (e) {
         dispatch({
           type: GET_POSTS_FAIL,
@@ -193,7 +195,7 @@ export default {
     }
   },
 
-  createLike(postId: string) {
+  createLike(postId: string, postPage?: boolean) {
     return async (dispatch: any, getStore: any) => {
       const {user} = getStore();
       try {
@@ -202,7 +204,12 @@ export default {
           url: `${API_PATH}/${postId}/like`,
           headers: {Authorization: `Bearer ${user.token}` }
         })
-
+        postPage ? 
+        dispatch({
+          type: CREATE_LIKE_ON_POST_PAGE,
+          payload: response.data,
+        })
+        :
         dispatch({
           type: CREATE_LIKE,
           payload: response.data,
@@ -213,6 +220,57 @@ export default {
           payload: e.messsage,
         });
       }
+    }
+  },
+
+  deletePost (postId: string) {
+    return async (dispatch: any, getStore: any) => {
+      const { user } = getStore();
+      try {
+        const response = await axios({
+          method: 'DELETE',
+          url: `${API_PATH}/${postId}/delete`,
+          headers: {Authorization: `Bearer ${user.token}` }
+        })
+        dispatch({
+          type: POST_DELETE_SUCCESS,
+        })
+      } catch(e) {
+        dispatch({
+          type: GET_POSTS_FAIL,
+          payload: e.messsage,
+        });
+      }
+    }
+  },
+  
+  createComment(postId: string, formData: {postComment: string}) {
+    return async (dispatch: any, getStore: any) => {
+      const { user } = getStore();
+      try {
+        const response = await axios({
+          method: 'POST',
+          url: `http://localhost:5000/api/${postId}/comments`,
+          headers: {Authorization: `Bearer ${user.token}`},
+          data: {commentBody:formData.postComment}
+        })
+        dispatch({
+          type: CREATE_COMMENT,
+          payload: response.data
+        })
+      } catch(e) {
+        dispatch({
+          type: CREATE_COMMENTS_FAIL,
+          payload: e.messsage,
+        });
+      }
+      
+    }
+  },
+
+  resetDelete() {
+    return {
+      type: RESET_DELETE_INDICATOR,
     }
   }
 }

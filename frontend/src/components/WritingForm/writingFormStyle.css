@@ -18,13 +18,21 @@
 
 .writing_form_title {
   font-size: 32px;
+  padding-left: 5px;
 }
  
 
 .writing_form_discription,
 .writing_form_content {
   font-size: 18px;
-  
+  resize: none;
+  border-left: 0.5px rgba(128, 128, 128, 0.400) solid;
+  padding-left: 5px;
+}
+
+.writing_form_discription:focus,
+.writing_form_content:focus {
+  border-left: 0.5px rgba(0, 0, 255, 0.400) solid;
 }
 
 .hidden-input {
@@ -34,6 +42,7 @@
 .writing_form-header {
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 .writing_select {
@@ -46,10 +55,10 @@
   margin-bottom: 15px;
 }
 
-.bth_block {
+.writing__bth_block {
   display: flex;
   margin: 0 auto ;
-  width: 300px;
+  width: 400px;
   justify-content: space-around;
   
 }
@@ -57,4 +66,13 @@
 .writing_submit-btn {
   margin-left: 20px;
   margin-right: 30px;
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.author {
+  margin-left: 15px;
 }

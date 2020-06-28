@@ -1,11 +1,12 @@
 import database from '../database/connection.js';
 import mongoose from 'mongoose';
 import Boom from 'boom';
+import { request } from 'http';
 
 export default {
   createPost: async (request, h) => {
     try{
-      const {title, shortDiscription, textContent} = request.payload;
+      const {title, shortDiscription, textContent, category} = request.payload;
       const authorOfPost = request.auth.credentials;
 
       let newPost = new database.post({
@@ -14,12 +15,13 @@ export default {
         textContent: textContent,
         shortDiscription,
         postAuthor: authorOfPost._id,
+        category: category,
       });
 
       newPost.save(function (err) {
         if (err) throw err;
       })
-      await database.user.updateOne({userId:authorOfPost._id}, {$push: {posts: newPost._id}})
+      await database.user.findByIdAndUpdate(authorOfPost._id, {$push: {posts: newPost._id}})
       console.log(newPost._id)
       return newPost._id
     } catch(e) {
@@ -40,8 +42,8 @@ export default {
           .populate({
             path: 'comments',
             populate: {
-              path: 'author',
-              select: ['name', 'surname', 'userId', 'avatartUrl']
+              path: 'commentAuthor',
+              select: ['name', 'surname', '_id', 'avatarUrl']
             }
           });
 
@@ -242,4 +244,37 @@ export default {
       return Boom.badImplementation('Произошла ошибка на сервере. Попробуйте позже')
     }
   },
+
+  deletePost: async (request, h) => {
+    try {
+      const authUser = request.auth.credentials;
+      const postId = request.params.postId;
+      
+      const foundPost = await database.post.findById(postId);
+
+      if(foundPost) {
+
+        if(String(authUser._id) === String(foundPost.postAuthor)) {
+          await database.post.deleteOne({_id:postId})
+          const author = await database.user.findById(foundPost.postAuthor);
+          const postIndex = author.posts.findIndex(id => id.toString() === postId.toString())
+          author.posts.splice(postIndex, 1);
+          author.save(function (err) {
+            if (err) throw err;
+          })
+
+        } else {
+          return Boom.forbidden('Отсутвует разрешение на данное действие')
+        }
+
+      } else {
+        return Boom.notFound('Пост не найден')
+      }
+
+      return 'Пост удален';
+    } catch(e) {
+      console.log(e);
+      return Boom.badImplementation('Произошла ошибка , попробуйте позднее'); 
+    }
+  }
 }

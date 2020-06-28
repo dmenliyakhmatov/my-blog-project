@@ -14,7 +14,7 @@ export default {
         _id: new mongoose.Types.ObjectId(),
         postId: postId,
         commentBody: commentData,
-        author: userId
+        commentAuthor: userId
       })
       
       newComment.save(function (err) {
@@ -25,7 +25,12 @@ export default {
         {$push: {comments: newComment._id}}
       )
 
-      return "Комментарий успешно создан"
+      return await database
+            .comment.findById(newComment._id).
+            populate({
+              path: 'commentAuthor',
+              select: ['name', 'surname', '_id', 'avatarUrl']
+            })
     
     } else { return Boom.notFound('Пост не найден')}
   },

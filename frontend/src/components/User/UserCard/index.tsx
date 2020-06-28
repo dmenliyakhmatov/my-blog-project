@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefAttributes } from 'react';
 import './userCardStyle.css'
 import defaultAvatar from '../../../assets/img/defaultAvatar.png'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 interface IUserCardProps {
   userData: {
-    _id: string;
     name: string;
     surname: string;
     birthDate: string;
@@ -16,11 +15,13 @@ interface IUserCardProps {
     avatarUrl: string;
   }
   isCurrentUserPage: boolean;
+  userId: string;
+  avatarRef: any;
+  avatarUpload: any;
 }
 
 const UserCard = (props: IUserCardProps) => {
   const {userData :{
-    _id,
     name,
     surname,
     birthDate,
@@ -28,14 +29,32 @@ const UserCard = (props: IUserCardProps) => {
     avatarUrl,
   },
   isCurrentUserPage,
+  userId,
+  avatarRef,
+  avatarUpload,
   } = props;
+
+  const onAvatarClick = () => {
+    avatarRef.current.click();
+  }
+
   return (
     <section className="user-card__wrapper">
       <div className="user-card_top">
-        <img src={`${API_PATH}${avatarUrl}`} alt="user avatar" className="user-card__avatar"/>
+        {
+          isCurrentUserPage 
+          ?
+            <div className="file_wrapper">
+              <input ref={avatarRef} type="file" className="hidden_input" onChange={avatarUpload}/>
+              <img src={`${API_PATH}${avatarUrl}`} alt="user avatar" className="user-card__avatar" onClick={onAvatarClick}/>
+            </div>
+          
+          :
+          <img src={`${API_PATH}${avatarUrl}`} alt="user avatar" className="user-card__avatar"/>
+        }
         <div className="user-card__setting-area">
         {isCurrentUserPage && 
-          <Link to={`/user/edit/${_id}`}>
+          <Link to={`/user/edit/${userId}`}>
             <Button variant="outlined">
               <SettingsOutlinedIcon />  
             </Button>

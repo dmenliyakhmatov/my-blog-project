@@ -9,6 +9,7 @@ interface IAuthModalState {
 }
 
 interface IAuthModalProps {
+  errMsg: string;
   closeModal: () => void;
   loginSubmit: (formData: ILoginForm) => void;
   registrationSubmit: (formData: IRegisterForm) => void;

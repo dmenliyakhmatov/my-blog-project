@@ -2,10 +2,11 @@
   padding: 15px 20px;
 }
 
-.lcomment__wrapper {
+.comment__wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  flex-direction: column;
 }
 
 .live__comment__header {
@@ -26,7 +27,7 @@
   border-radius: 2px;
 }
 
-.live__fullName {
+.comment__fullName {
   font-size: 16px;
   font-weight: 600;
   margin-left: 8px;

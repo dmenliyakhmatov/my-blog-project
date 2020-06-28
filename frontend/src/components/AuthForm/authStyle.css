@@ -124,3 +124,22 @@
    margin-left: 20px;
    margin-right: 30px;
  }
+
+ .error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 37px;
+  margin-left: 200px;
+  color: red;
+  font-size: 12px;
+}
+
+.is-error{
+  color: red;
+}
+
+.input-error {
+  background-color: rgba(255, 0, 0, 0.089);
+  border-bottom: 1px solid red;
+}

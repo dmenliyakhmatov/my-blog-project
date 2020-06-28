@@ -40,6 +40,10 @@ const schema = new mongoose.Schema(
     },
     coverUrl: {
       type:mongoose.Schema.Types.String,
+    },
+    category: {
+      type:mongoose.Schema.Types.String,
+      required: true,
     }
   },
   {

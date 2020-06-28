@@ -1,31 +1,44 @@
 import React from 'react';
-import CommentForm from '../../../components/Post/CommentForm';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import actions from '../../../store/post/actions';
+import CommentForm from '../../../components/Post/CommentForm';
+import store from '../../../store';
+import { change } from 'redux-form';
 
 interface ICommentProps {
   postId: string;
+  actions?: any;
 }
 
-export default class CommentFormContainer extends React.Component<ICommentProps,{}> {
+class CommentFormContainer extends React.Component<ICommentProps,{}> {
   constructor(props: ICommentProps) {
     super(props);
   };
 
-  handleSubmit = (formData: any) => {
-    console.log("!2sdd")
+  inputRef= React.createRef<HTMLInputElement>();
 
-        axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/${this.props.postId}/comments`,
-        headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'},
-        data: {commentBody:formData.postComment}
-      }).then((response) => {console.log(response)}).catch((error) => {console.log(error)})
-      // console.log(response);
+  handleSubmit = (formData: any) => {
+    this.props.actions.createComment( this.props.postId, formData);
+    store.dispatch(change('comment', 'postComment', ''))
+  }
+
+  formProps ={
+    inputRef: this.inputRef
   }
 
   render() {
     return (
-        <CommentForm onSubmit={this.handleSubmit} />
+        <CommentForm {...this.formProps} onSubmit={this.handleSubmit} />
     )
   }
 }
+
+const mapStateToProps = (state: any) => ({ ...state.post, ...state.user });
+
+const mapDispatchToProps = (dispatch: any) => ({
+  actions: bindActionCreators(actions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentFormContainer)

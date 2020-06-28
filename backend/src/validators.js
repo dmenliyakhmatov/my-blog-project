@@ -38,7 +38,8 @@ export default {
      _id: Joi.string().optional(),
     title: Joi.string().required(),
     shortDiscription: Joi.string().optional(),
-    textContent: Joi.string().required()
+    textContent: Joi.string().required(),
+    category: Joi.string().required(),
    })
  },
  allPostsData: {
@@ -58,6 +59,11 @@ export default {
     _id: Joi.string().required(),
     commentBody: Joi.string().min(1).required(),
     authorUserId: Joi.string().required()
+   })
+ },
+ deletePostData: {
+   params: Joi.object({
+     postId: Joi.string().required(),
    })
  }
 }

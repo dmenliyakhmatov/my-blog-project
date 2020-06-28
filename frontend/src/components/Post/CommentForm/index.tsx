@@ -5,7 +5,8 @@ import './commentFormStyle.css';
 import Button from '@material-ui/core/Button';
 
 const CommentFormComponent = (props:any) => {
-  const {handleSubmit, initialValues} = props;
+  const {handleSubmit, inputRef} = props;
+
   return (
     <section className="comment-form_wrapper">
       <form onSubmit={handleSubmit} className="comment-form_container">

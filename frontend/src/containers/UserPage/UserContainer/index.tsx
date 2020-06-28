@@ -11,7 +11,6 @@ interface UserProps {
   actions: any;
   isCurrentUserPage: boolean;
   userData:{
-    _id: string;
     name: string;
     surname: string;
     about: string;
@@ -33,25 +32,45 @@ interface UserProps {
 class UsersContainer extends React.Component<UserProps, {}> {
   constructor(props:UserProps) {
     super(props);
+    this.avatarUpload = this.avatarUpload.bind(this);
+  }
+
+  avatarRef= React.createRef<HTMLInputElement>();
+
+  avatarUpload () {
+    const userId = this.props.match.params.userId;
+    if (this.avatarRef.current?.files!==null) {
+    this.props.actions.uploadAvatar(userId, this.avatarRef.current?.files[0])
+    }
   }
 
   componentDidMount() {
     this.props.actions.fetchUser(this.props.match.params.userId);
   }
-
   showMore = () => {
     this.props.actions.fetchNextPosts(this.props.postNumber, this.props.match.params.userId);
   }
 
-
+  componentWillUnmount() {
+    this.props.actions.resetPostCounter();
+  }
 
   render() {
-    const {userData, userPosts, isCurrentUserPage} = this.props;
-    console.log('!!!', userData)
+    const {
+      userData,
+      userPosts,
+      isCurrentUserPage,
+      match:{
+        params: {
+          userId
+        }
+      }
+    } = this.props;
+    
     return (<>
      {this.props.isUsersLoading && <span>Загрузка...</span>}
       {userData && <div>
-        <UserCard userData={userData} isCurrentUserPage={isCurrentUserPage}  />
+        <UserCard avatarUpload={this.avatarUpload} avatarRef={this.avatarRef} userId={userId} userData={userData} isCurrentUserPage={isCurrentUserPage}  />
         {userPosts && userPosts.map((post, index) => (
           <PostItem 
           {...post} key={`PostItem_${post._id}`} />

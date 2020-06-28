@@ -18,24 +18,39 @@ interface IUserEditProps {
     birthDate: string;
     about: string;
   };
+  history: any;
 }
 class UserEdit extends React.Component<IUserEditProps,{}> {
   constructor(props: IUserEditProps){
     super(props)
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
-  componentDidMount() {
-    this.props.actions.getEditData(this.props.match.params.userId)
+  componentDidMount (){
+     this.props.actions.getEditData(this.props.match.params.userId)
   }
 
+  onDelete = () => {
+    const userId = this.props.match.params.userId
+    this.props.actions.deleteUser(userId)
+    this.props.history.push(`/`)
+  }
+
+  formProps = {
+    onDelete: this.onDelete,
+  }
   onSubmit(formData: any) {
-    this.props.actions.sendEditData(formData, this.props.match.params.userId)
+    const userId = this.props.match.params.userId;
+
+    this.props.actions.sendEditData(formData, this.props.match.params.userId);
+    this.props.history.push(`/user/${userId}`)
   }
 
  render() {
+   console.log('edit', this.props.editData)
    return (
-      <UserEditForm initialValues={this.props.editData} onSubmit={this.onSubmit} />
+      <UserEditForm {...this.formProps} initialValues={this.props.editData} onSubmit={this.onSubmit} />
    )
  }
 }

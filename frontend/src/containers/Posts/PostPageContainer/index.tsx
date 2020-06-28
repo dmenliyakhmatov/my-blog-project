@@ -10,14 +10,13 @@ interface IPostProps {
   isLoggedIn: boolean;
   isPostLoading: boolean;
   errMsg: string;
-  postsList: [];
   actions: any;
   match: {
     params: {
       postId: string
     }
   };
-  postData: {};
+  postData: any;
   currentUser:{
     currentId:string;
   }
@@ -25,20 +24,24 @@ interface IPostProps {
 class PostPageContainer extends React.Component<IPostProps,{}> {
   constructor(props:IPostProps){
     super(props);
+    this.handleLikeButton = this.handleLikeButton.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.fetchOnePost(this.props.match.params.postId)
   }
 
+  handleLikeButton() {
+    this.props.actions.createLike(this.props.match.params.postId, true);
+  }
+
   render() {
     const userId = this.props.currentUser.currentId;
     return(
       <>
-      {console.log('!!!', this.props.postData)}
       {this.props.isPostLoading && <span>Загрузка...</span>}
       { this.props.postData && <div>
-        <PostPage {...this.props.postData} userId={userId} />
+        <PostPage {...this.props.postData} userId={userId}  handleLikeButton={this.handleLikeButton} />
         <CommentBlock  {...this.props.postData} />
         <CommentFormContainer postId={this.props.match.params.postId} />
         </div>

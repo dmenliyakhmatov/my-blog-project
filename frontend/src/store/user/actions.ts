@@ -1,5 +1,5 @@
 import { API_PATH } from './../../constants/apiPath';
-import { REGISTRATION_FAIL, LEAVE_USER_PAGE, GET_DATA_FROM_STORAGE } from './../../constants/index';
+import { REGISTRATION_FAIL, LEAVE_USER_PAGE, DELETE_USER, GET_DATA_FROM_STORAGE, GET_USERS_FAIL } from './../../constants/index';
 import * as constants from '../../constants';
 import axios from 'axios';
 import { ILoginForm } from '../../interfaces';
@@ -28,7 +28,7 @@ export default {
                     type: constants.LOGIN_SUCCESS,
                     payload: response.data,
                 })
-            } catch (e) {
+            } catch (e) {console.log(e)
                 dispatch({
                     type: constants.LOGIN_FAIL,
                     payload: e.message,
@@ -51,9 +51,10 @@ export default {
                     type: constants.REGISTRATION_SUCCESS,
                     payload: response.data,
                 })
-            } catch (e) {console.log(e)
+            } catch (e) {console.log(e.err)
+                
                 dispatch({
-                    type: constants.REGISTRATION_FAIL,
+                    type: constants.LOGIN_FAIL,
                     payload: e.message,
                 });
             }
@@ -135,7 +136,7 @@ export default {
                     url:`${API_PATH}/user/${userId}/edit`,
                     headers: {Authorization: `Bearer ${user.token}` }
                 });
-                
+                console.log(response.data)
                 dispatch({
                     type: constants.GET_EDIT_USERDATA,
                     payload: response.data
@@ -171,5 +172,52 @@ export default {
                 });
             }
         }
-    }
+    },
+    deleteUser( userId: string) {
+        return async (dispatch: any, getStore: any) => {
+            const { user } = getStore();
+            try {
+                const response = await axios({
+                    method: 'DELETE',
+                    url: `${API_PATH}/user/${userId}/delete`,
+                    headers: {Authorization: `Bearer ${user.token}` }
+                })
+                dispatch({
+                    type: DELETE_USER,
+                })
+
+            } catch(e) {
+                dispatch({
+                    type: constants.GET_USERS_FAIL,
+                    payload: e.message,
+                })
+            }
+        }
+    },
+    uploadAvatar(userId: string, avatar: File) {
+        return async (dispatch:any, getStore:any) => {
+            const { user } = getStore();
+            try {
+              const imgData = new FormData();
+              imgData.append('file', avatar);
+              imgData.append('userId', userId)
+              const imgResponse = await axios({
+                method: 'POST',
+                url: `${API_PATH}/upload/avatar`,
+                data: imgData,
+                headers: {Authorization: `Bearer ${user.token}`}
+              })
+      
+              dispatch({
+                type: constants.UPLOAD_AVATAR,
+                payload: imgResponse.data,
+              })
+             } catch (e) {
+              dispatch({
+                type: GET_USERS_FAIL,
+                payload: e.messsage,
+              });
+            }
+          }
+    },
 }

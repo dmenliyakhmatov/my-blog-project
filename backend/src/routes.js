@@ -64,7 +64,7 @@ export default [{
   },
   {
     method: 'DELETE',
-    path: '/user/{userId}/delete',
+    path: '/api/user/{userId}/delete',
     handler: usersActions.deleteUser,
     options: {
       auth: {
@@ -135,6 +135,17 @@ export default [{
         strategy: 'user'
       },
       validate: validators.postData
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/api/{postId}/delete',
+    handler: postActions.deletePost,
+    options: {
+      auth: {
+        strategy: 'user'
+      },
+      validate: validators.deletePostData,
     }
   },
   {
@@ -216,11 +227,45 @@ export default [{
       })
       return 'Пост успешно изменен'
     }
-      // return response;
-
-      
-
-    // }
+     catch(e) {
+      console.log(e)
+    }
+  },
+  options: {
+    payload: {
+      output: 'stream',
+      parse: true,
+      multipart: true,
+      allow: 'multipart/form-data'
+    }
+  }
+  
+},
+{
+  method:'POST',
+  path:'/api/upload/avatar',
+  handler: async (req, h) => {
+    const { payload } = req;
+    try {
+      const handleFileUpload = file => {
+        return new Promise((resolve, reject) => {
+          const filename = file.hapi.filename
+          const data = file._data
+          fs.writeFile('./src/public/img/avatars/' + filename, data, err => {
+            if (err) {
+              console.log(err)
+              reject(err)
+            }
+            resolve(`/avatar/${filename}`)
+          })
+        })
+      }
+      const response = await handleFileUpload(payload.file)
+      await database.user.findByIdAndUpdate(payload.userId, {avatarUrl: response}, function(err, user){
+        if(err) return console.log(err);
+      })
+      return response
+    }
      catch(e) {
       console.log(e)
     }

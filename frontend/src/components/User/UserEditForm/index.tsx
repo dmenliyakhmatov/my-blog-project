@@ -1,12 +1,12 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import {Field} from 'redux-form';
-import DoneIcon from '@material-ui/icons/Done';
 import Button from '@material-ui/core/Button';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import './userEditFormStyle.css';
 
 const UserEdit = (props:any) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, onDelete } = props;
   console.log('userForm', props)
 
   return (
@@ -23,6 +23,9 @@ const UserEdit = (props:any) => {
       <div className="bth_block">
       <Button type='submit' color='primary' variant="contained" size="large" className="writing_submit-btn">Опубликовать</Button> 
       <Button type='button' color='secondary' variant="contained">Отмена</Button>
+      <Button type='button' color='secondary' variant="outlined" onClick={onDelete}>
+        <DeleteForeverIcon />
+      </Button>
       </div>
       
     </form>

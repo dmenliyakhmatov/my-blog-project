@@ -80,7 +80,7 @@ class PageWrapper extends React.Component<any,IPageWrapperState> {
   }
 
   render() {
-    const { isLoggedIn, currentUser } = this.props;
+    const { isLoggedIn, currentUser, errMsg } = this.props;
 
     return (<>
       <PageHeader 
@@ -106,6 +106,7 @@ class PageWrapper extends React.Component<any,IPageWrapperState> {
           loginSubmit={this.loginSubmit} 
           closeModal={this.closeModal} 
           registrationSubmit={this.registrationSubmit}
+          errMsg={errMsg}
           />
       </>}
       </>
