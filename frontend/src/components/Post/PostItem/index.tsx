@@ -13,15 +13,16 @@ const PostItem = (props: any) => {
     shortDiscription,
     coverUrl,
     postAuthor,
+    category,
     handleLikeButton,
     likesCount,
     } = props;
-
+    console.log(props)
   return (
     <section className="post__wrapper">
       <div className="post-header">
-        <Link to="#" className="category post-header__item"> 
-          <div>Категория</div>
+        <Link to={`/posts/categories/${category}`} className="category post-header__item"> 
+          <div>{category}</div>
         </Link>
         <Link to={`/user/${postAuthor._id}`} className="author post-header__item"> 
           {`${postAuthor.name} ${postAuthor.surname}`}

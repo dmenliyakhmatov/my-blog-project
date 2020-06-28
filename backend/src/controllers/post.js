@@ -54,7 +54,6 @@ export default {
           updateOne({_id: postId}, {$inc:{pageViews: 1}});
 
 
-
       const createdData = `${post.createdAt.getDate()}-${post.createdAt.getMonth()+1}-${post.createdAt.getFullYear()}`;
       const postData = {
         _id: post._id,
@@ -66,6 +65,7 @@ export default {
         likesCount: post.likesCount,
         pageViews: post.pageViews,
         coverUrl: post.coverUrl,
+        category: post.category,
         createdData,
       }
       
@@ -135,6 +135,7 @@ export default {
             postAuthor:true,
             createdAt:true,
             likesCount:true,
+            category: true
           }, 
             {sort: { 'createdAt': -1 }
           })
@@ -164,7 +165,8 @@ export default {
             title: true,
             textContent:true,
             shortDiscription: true, 
-            coverUrl:true
+            coverUrl:true,
+            category: true
           },
           {sort: { 'createdAt': -1 }
         })
@@ -198,6 +200,7 @@ export default {
             postAuthor:true,
             createdAt:true,
             likesCount:true,
+            category: true,
           }, 
             {sort: { 'createdAt': -1 }
           })
@@ -225,7 +228,8 @@ export default {
             title: true,
             textContent:true,
             shortDiscription: true, 
-            coverUrl:true
+            coverUrl:true,
+            category: true,
           },
           {sort: { 'createdAt': -1 }
         })

@@ -42,7 +42,7 @@ handleLikeButton(postId: string) {
             <PostItem handleLikeButton={this.handleLikeButton} {...post} key={`Post_${post._id}`} />)
           )
         }
-        <button type='button' onClick={this.showMore} >Жмяк</button>
+        <button type='button' onClick={this.showMore} >Показать еще</button>
         </>
     )
   }

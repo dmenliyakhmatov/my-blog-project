@@ -32,7 +32,7 @@ const PostPage = (props: any) => {
       <section className="post__header-wrapper">
           <ul className="post__header-information_row">
             <li className="post__header__info-item">
-              <Link to={`user/${''}`} className='category-link'>Категория </Link>
+              <Link to={`posts/categories/${category}`} className='category-link'>{category} </Link>
             </li>
             <li className="post__header__info-item">
               <Link to={`user/${postAuthor._id}`} className='author-link'>{`${postAuthor.name} ${postAuthor.surname}`} </Link>
