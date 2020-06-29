@@ -20,7 +20,7 @@ const UserEdit = (props:any) => {
       <Field name='email' component='input' type='email' placeholder='email' className="user-edit_field writing_form_input"/>
       <Field name='about' component='textarea' type='text' cols='76' rows='15' placeholder='Немного о себе' className="user-edit_field writing_form_about"/>
       
-      <div className="bth_block">
+      <div className="btn_block">
       <Button type='submit' color='primary' variant="contained" size="large" className="writing_submit-btn">Опубликовать</Button> 
       <Button type='button' color='secondary' variant="contained">Отмена</Button>
       <Button type='button' color='secondary' variant="outlined" onClick={onDelete}>

@@ -42,10 +42,10 @@
   flex-direction: row;
 }
 
-.bth_block {
+.btn_block {
   display: flex;
   margin: 0 auto ;
-  width: 300px;
+  width: 500px;
   justify-content: space-around;
   
 }

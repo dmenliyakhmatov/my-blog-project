@@ -2,8 +2,6 @@ import React from 'react';
 import './PageHeader.css';
 import logo from '../../../assets/img/logoza.png';
 import {Link} from 'react-router-dom';
-import { routes } from '../../../router/routes'
-import defaultAvatar from '../../../assets/img/defaultAvatar.png'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
@@ -41,14 +39,14 @@ export default function Header(props:HeaderProps) {
     onLogout,
     handleLogInButton,
   } = props;
-  console.log(props)
+  
   return (
     <div className={"main_header"}>  
       <div className={'header__containter'}>
         <h1 className={'visually-hidden'}>biter's blogs</h1>
 
         <Link to="/" className={'header__logo'}>
-          <img src={logo} width={50} alt="Biter's blogs"/>
+          <img src={`${API_PATH}/cover/logoza.png`} width={50} alt="Biter's blogs"/>
         </Link>
         <Link to="/writing" className={"newPost"}>Новая запись</Link>
       {

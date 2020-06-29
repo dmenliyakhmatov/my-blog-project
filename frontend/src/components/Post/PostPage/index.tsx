@@ -3,13 +3,12 @@ import {Link} from 'react-router-dom';
 import './postPage.css'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { API_PATH } from '../../../constants/apiPath';
+import categories from '../../../constants/categories';
 
 const PostPage = (props: any) => {
-  console.log('PostPage',props)
   const {
     _id,
     title, 
@@ -25,18 +24,28 @@ const PostPage = (props: any) => {
     handleLikeButton
 } = props;
 
-  const isOwner = postAuthor._id === userId;
+  const isOwner: boolean = false;
+  if(postAuthor) {
+    const isOwner = postAuthor._id === userId;
+  }
 
   return (
     <article className='layout-center' >
       <section className="post__header-wrapper">
           <ul className="post__header-information_row">
             <li className="post__header__info-item">
-              <Link to={`posts/categories/${category}`} className='category-link'>{category} </Link>
+              <Link to={`posts/categories/${category}`} className='category-link'>{categories[category]} </Link>
             </li>
-            <li className="post__header__info-item">
+            { postAuthor ? (
+              <li className="post__header__info-item">
               <Link to={`user/${postAuthor._id}`} className='author-link'>{`${postAuthor.name} ${postAuthor.surname}`} </Link>
-            </li>
+            </li> 
+            ) : (
+              <li className="post__header__info-item">
+              <span  className='author-link'>Пользователь удален </span>
+            </li> 
+            )
+            }
             <li className="post__header__info-item">
               <span className="create-data">{createdData}</span> 
             </li>

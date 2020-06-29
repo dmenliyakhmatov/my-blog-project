@@ -5,6 +5,7 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import { API_PATH } from '../../../constants/apiPath';
+import categories from '../../../constants/categories';
 
 const PostItem = (props: any) => {
   const {
@@ -17,18 +18,26 @@ const PostItem = (props: any) => {
     handleLikeButton,
     likesCount,
     } = props;
-    console.log(props)
   return (
     <section className="post__wrapper">
       <div className="post-header">
         <Link to={`/posts/categories/${category}`} className="category post-header__item"> 
-          <div>{category}</div>
+          <div>{categories[category]}</div>
         </Link>
-        <Link to={`/user/${postAuthor._id}`} className="author post-header__item"> 
-          {`${postAuthor.name} ${postAuthor.surname}`}
-        </Link>
+        { postAuthor ? (
+            <li className="post__header__info-item">
+              <Link to={`user/${postAuthor._id}`} className='author-link'>{`${postAuthor.name} ${postAuthor.surname}`} </Link>
+            </li> 
+            ) : (
+              <li className="post__header__info-item">
+              <span  className='author-link'>Пользователь удален </span>
+            </li> 
+            )
+        }
       </div>
-      <h2 className="post__title">{title}</h2>
+      <Link to={`/post/${_id}`} >
+        <h2 className="post__title">{title}</h2>
+      </Link>
       <div className="post__short">
       <Link to={`/post/${_id}`} > <p className="short-decription"> {shortDiscription}</p> </Link>
         {

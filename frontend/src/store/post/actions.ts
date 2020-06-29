@@ -129,13 +129,14 @@ export default {
 },
   publishPost(formData:{}, img?:File) {
     return async (dispatch:any, getStore:any) => {
+      const { user } = getStore();
       try {
         console.log(formData)
       const response = await axios({
         method: 'POST',
         url: `${API_PATH}/writing`,
         data: formData,
-        headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+        headers: {Authorization: `Bearer ${user.token}` }
       });
       if(img) {
         const imgData = new FormData();
@@ -145,7 +146,7 @@ export default {
           method: 'POST',
           url: `${API_PATH}/upload`,
           data: imgData,
-          headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+          headers: {Authorization: `Bearer ${user.token}` }
         })
 
         dispatch({
@@ -163,6 +164,7 @@ export default {
 
   editPost(formData:{}, postId: string, img?:File,) {
     return async (dispatch:any, getStore:any) => {
+      const { user } = getStore();
       dispatch({
         type: GET_POSTS_LOADING,
       });
@@ -172,7 +174,7 @@ export default {
         method: 'PUT',
         url: `${API_PATH}${postId}/edit`,
         data: formData,
-        headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+        headers: {Authorization: `Bearer ${user.token}` }
       });
       
       if(img) {
@@ -183,7 +185,7 @@ export default {
           method: 'POST',
           url: 'http://localhost:5000/upload',
           data: imgData,
-          headers: {Authorization: 'Bearer e98649fd-c5fd-4471-a7f8-bb6de401d689'}
+          headers: {Authorization: `Bearer ${user.token}` }
         })
       } 
     } catch (e) {

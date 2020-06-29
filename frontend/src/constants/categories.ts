@@ -1,4 +1,4 @@
-export default {
+ const categories:{[key: string]:string} = {
   news: 'Новости',
   art:  'Арт',
   life: 'О жизни',
@@ -9,3 +9,5 @@ export default {
   creation: 'Творчество',
   music: 'Музыка'
 }
+
+export default categories;
