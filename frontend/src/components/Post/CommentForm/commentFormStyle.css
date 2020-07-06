@@ -1,0 +1,29 @@
+.comment-form_wrapper {
+  margin-top: 15px;
+  text-align: center;
+  width: 100%;
+  border: 1px solid rgba(168, 167, 167, 0.555);
+  background-color: #ffffff;
+}
+
+.comment-form_container {
+  display: flex;
+  flex-direction: column;
+  width: 620px;
+  margin-left: 10px;
+}
+
+.comment_input {
+  width: 620px;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+}
+
+.comment-form_btn {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  align-self: flex-end;
+}

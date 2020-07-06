@@ -1,0 +1,56 @@
+.writing_form-wrapepr {
+ width: 100%;
+ background-color: #ffffff;
+ padding: 20px;
+ margin-top: 15px;
+}
+
+.writing_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-edit_field {
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+
+.writing_form_name {
+  font-size: 32px;
+}
+ 
+
+.writing_form_about {
+  resize: none;
+}
+
+.writing_form_about,
+.writing_form_input {
+  font-size: 18px;
+  
+}
+
+.hidden-input {
+  display: none;
+}
+
+.writing_form-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn_block {
+  display: flex;
+  margin: 0 auto ;
+  width: 500px;
+  justify-content: space-around;
+  
+}
+
+.writing_submit-btn {
+  margin-left: 20px;
+  margin-right: 30px;
+}

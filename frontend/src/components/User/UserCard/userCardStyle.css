@@ -1,0 +1,41 @@
+.user-card__wrapper {
+  display: flex;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+  width: 640px;
+  background-color: #ffffff;
+}
+
+.user-card_top {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.user-card__name {
+  margin-top: 15px;
+  font-size: 30px;
+}
+
+.content_row {
+  margin-top: 15px;
+}
+
+.user-card__avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 3px;
+}
+
+.hidden_input {
+  visibility: hidden;
+  display: none;
+}
+
+.user-card__avatar:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.253);
+}

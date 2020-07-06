@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main_header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #77bfa3;
+  z-index: 50;
+  width: 100%;
+}
+
+.header__containter {
+  display: flex;
+  box-sizing: border-box;
+  /*overflow: hidden;*/
+  position: relative;
+  margin: 0 auto;
+  justify-content: space-between;
+  width: 1300px;
+  height: 50px;
+}
+
+.visually-hidden:not(:focus):not(:active){
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.newPost {
+  padding: 5px;
+  align-self: center;
+  text-decoration: none;
+  color: #000000;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  background-color:  rgb(250, 249, 249);
+}
+
+.newPost:hover {
+  border-color: slategrey;
+}
+
+.header__user-menu {
+  display: flex;
+
+}
+
+.header__user-menu_link {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__login-menu{
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.user-menu_text {
+  display: inline-block;
+  margin-right: 7px;
+}
+
+.header__login-menu:hover{
+  color: rgb(0, 162, 255);
+  cursor: pointer;
+}
+
+.header__button {
+  width: 70px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.login{
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.login::before {
+  content: url(../../../assets/img/icons/login_icon.svg);
+  position: absolute;
+  left: -7px;
+  width: 17px;
+  height: 17px;
+}
+/*.header__button {
+  margin-top: 10px;
+}*/
+.logout-menu_arrow {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.logout-menu_arrow:hover {
+  font-size: 25px;
+}
+
+.isActive {
+  transform: rotate(180deg);
+}
+
+.logout-menu_wrapper {
+  position: absolute;
+  margin-top: 40px;
+  right: 0;
+  width: 100px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 3px;
+}
+
+.logout-menu_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.logout-menu_btn:hover {
+  color: red;
+}
+
+.header__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+}

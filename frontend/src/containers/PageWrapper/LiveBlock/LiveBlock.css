@@ -1,0 +1,7 @@
+.live_container{
+  position: sticky;
+  width: 300px;
+  margin-left: 0;
+  right: calc((100% - 1300px)*.5);;
+  padding-top: 20px;
+}
